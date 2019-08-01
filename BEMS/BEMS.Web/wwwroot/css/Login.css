@@ -1,0 +1,10 @@
+﻿body {
+    background-color: #99D5EB    
+}
+.Login_Box {
+    max-width: 400px;
+    z-index: 100;
+    margin: 0 auto;
+    padding-top: 60px;
+    left:300px;
+}
