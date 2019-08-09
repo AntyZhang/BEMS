@@ -12,8 +12,7 @@ namespace BEMS.DAL.EF.DBModels
         public string EType { get; set; }
 
         public string Vendor { get; set; }
-        public string ENumber { get; set; }
-
+        public string SerialNumber { get; set; }
         public string IP { get; set; }
 
         public string MAC { get; set; }

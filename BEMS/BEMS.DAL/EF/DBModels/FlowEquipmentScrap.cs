@@ -4,7 +4,15 @@ using System.Text;
 
 namespace BEMS.DAL.EF.DBModels
 {
-    class FlowEquipmentScrap
+    public class FlowEquipmentScrap : FlowBasic
     {
+        public int Applyer { get; set; }
+
+        public string Contact { get; set; }
+
+        public int EquipmentID { get; set; }
+
+        public string SerialNumber { get; set; }
+
     }
 }
