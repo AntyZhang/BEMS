@@ -13,12 +13,13 @@ namespace BEMS.DAL.EF.DBModels
 
         public string Vendor { get; set; }
         public string SerialNumber { get; set; }
+        public string EModel { get; set; }
         public string IP { get; set; }
 
         public string MAC { get; set; }
 
         public decimal LimitedUseage { get; set; }
 
-        public bool IsINUse { get; set; }
+        public bool IsInUse { get; set; }
     }
 }

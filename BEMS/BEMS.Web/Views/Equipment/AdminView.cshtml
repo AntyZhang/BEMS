@@ -1,0 +1,120 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="adminView">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">设备管理</h3>
+        </div>
+        <div class="panel-body form-inline">
+            <label>设备类型: <input type="text" v-model="filter.EType" /></label>
+            <label>使用人: <input type="text" v-model="filter.Owner" /></label>
+
+            <input type="button" value="搜索" class="btn btn-primary" v-on:click="Search" />
+        </div>
+    </div>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>序号</th>
+                <th>设备类型</th>
+                <th>设备厂家</th>
+                <th>设备型号</th>
+                <th>资产编号</th>
+                <th>设备IP</th>
+                <th>设备MAC</th>
+                <th>使用年限</th>
+                <th>使用人</th>
+                <th>使用部门/位置</th>
+                <th>是否在用</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="item in dataSource" :key="item.ID">
+                <td>{{item.ID}}</td>
+                <td>{{item.EType}}</td>
+                <td>{{item.Vendor}}</td>
+                <td>{{item.EModel}}</td>
+                <td>{{item.SeriaNumber}}</td>
+                <td>{{item.IP}}</td>
+                <td>{{item.MAC}}</td>
+                <td>{{item.LimitedUseage}}</td>
+                <td>{{item.Owner}}</td>
+                <td>{{item.Address}}</td>
+                <td>{{item.IsInUse}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="bottom">
+        <ul class="pagination">
+            <li>
+                <a href="#" aria-label="Previous" v-on:click="GotoFirst">
+                    <span aria-hidden="true">First</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" aria-label="Previous" v-on:click="GotoPrevious">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li v-if="Pagination.TotalPage>=1"><a href="#" v-on:click="GotoPage(1)">1</a></li>
+            <li v-if="Pagination.TotalPage>=2"><a href="#" v-on:click="GotoPage(2)">2</a></li>
+            <li v-if="Pagination.TotalPage>=3"><a href="#" v-on:click="GotoPage(3)">3</a></li>
+            <li v-if="Pagination.TotalPage>3" class="disabled"><a>...</a></li>
+            <li>
+                <a href="#" aria-label="Next" v-on:click="GotoNext">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" aria-label="Last" v-on:click="GotoLast">
+                    <span aria-hidden="true">Last</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<template>
+
+</template>
+<script>
+    var vm = new Vue({
+        el: "#adminView",
+        data: {
+            filter: {
+                EType: "",
+                Owner: ""
+            },
+            dataSource: [],
+            Pagination: {
+                CurrentPage: 0,
+                TotalPage: 0
+            }
+        },
+        created() {
+            this.LoadAllData(0);
+        },
+        methods: {
+            LoadAllData(pageNum) {
+                axios.post("/Equipment/LoadData", { NewPage: pageNum }).then((response) => {
+                    this.dataSource = response.data;
+                    this.Pagination.CurrentPage = 0;
+                    this.Pagination.TotalPage = 500;
+                })
+            },
+            Search() {
+                alert(this.filter.EType);
+                alert(this.filter.Owner);
+            },
+            GotoFirst() {
+                this.LoadAllData(0);
+            },
+            GotoPrevious() { },
+            GotoNext() { },
+            GotoLast() { },
+            GotoPage(num) {
+                this.LoadAllData(num - 1);
+            }
+        }
+    })
+</script>
