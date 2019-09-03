@@ -1,6 +1,11 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<style>
+    .pagination > li > a {
+        cursor: pointer;
+    }
+</style>
 <div id="adminView">
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -47,29 +52,24 @@
     </table>
     <div class="bottom">
         <ul class="pagination">
-            <li>
-                <a href="#" aria-label="Previous" v-on:click="GotoFirst">
-                    <span aria-hidden="true">First</span>
+            <li :class="{'disabled':Pagination.CurrentPage==1}">
+                <a v-on:click="GotoFirst">First</a>
+            </li>
+            <li :class="{'disabled':Pagination.CurrentPage==1}">
+                <a v-on:click="GotoPrevious">&laquo;</a>
+            </li>
+            <li v-if="Pagination.PageList[0]>1" class="disabled"><a>...</a></li>
+            <li v-for="item in Pagination.PageList" :key="item" :class="{'active':item==Pagination.CurrentPage}">
+                <a v-on:click="GotoPage(item)">
+                    <span aria-hidden="true" v-html="item"></span>
                 </a>
             </li>
-            <li>
-                <a href="#" aria-label="Previous" v-on:click="GotoPrevious">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
+            <li v-if="Pagination.PageList[Pagination.PageList.length - 1]<Pagination.TotalPage" class="disabled"><a>...</a></li>
+            <li :class="{'disabled':Pagination.CurrentPage==Pagination.TotalPage}">
+                <a v-on:click="GotoNext">&raquo;</a>
             </li>
-            <li v-if="Pagination.TotalPage>=1"><a href="#" v-on:click="GotoPage(1)">1</a></li>
-            <li v-if="Pagination.TotalPage>=2"><a href="#" v-on:click="GotoPage(2)">2</a></li>
-            <li v-if="Pagination.TotalPage>=3"><a href="#" v-on:click="GotoPage(3)">3</a></li>
-            <li v-if="Pagination.TotalPage>3" class="disabled"><a>...</a></li>
-            <li>
-                <a href="#" aria-label="Next" v-on:click="GotoNext">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-            <li>
-                <a href="#" aria-label="Last" v-on:click="GotoLast">
-                    <span aria-hidden="true">Last</span>
-                </a>
+            <li :class="{'disabled':Pagination.CurrentPage==Pagination.TotalPage}">
+                <a v-on:click="GotoLast">Last</a>
             </li>
         </ul>
     </div>
@@ -87,19 +87,19 @@
             },
             dataSource: [],
             Pagination: {
-                CurrentPage: 0,
-                TotalPage: 0
+                CurrentPage: 1,
+                TotalPage: 0,
+                PageList: [1, 2, 3]
             }
         },
         created() {
-            this.LoadAllData(0);
+            this.LoadAllData();
         },
         methods: {
-            LoadAllData(pageNum) {
-                axios.post("/Equipment/LoadData", { NewPage: pageNum }).then((response) => {
+            LoadAllData() {
+                axios.post("/Equipment/LoadData", { NewPage: this.Pagination.CurrentPage }).then((response) => {
                     this.dataSource = response.data;
-                    this.Pagination.CurrentPage = 0;
-                    this.Pagination.TotalPage = 500;
+                    this.Pagination.TotalPage = 25;
                 })
             },
             Search() {
@@ -107,13 +107,64 @@
                 alert(this.filter.Owner);
             },
             GotoFirst() {
-                this.LoadAllData(0);
+                this.GotoPage(1);
             },
-            GotoPrevious() { },
-            GotoNext() { },
-            GotoLast() { },
+            GotoPrevious() {
+                if (this.Pagination.CurrentPage != 1) {
+                    this.GotoPage(this.Pagination.CurrentPage - 1);
+                }
+            },
+            GotoNext() {
+                if (this.Pagination.CurrentPage != this.Pagination.TotalPage) {
+                    this.GotoPage(this.Pagination.CurrentPage + 1);
+                }
+            },
+            GotoLast() {
+                this.GotoPage(this.Pagination.TotalPage);
+            },
             GotoPage(num) {
-                this.LoadAllData(num - 1);
+                if (this.Pagination.CurrentPage != num) {
+                    this.Pagination.CurrentPage = num;
+                    this.AdjustPaginationAfterRecalculate();
+                    this.LoadAllData();
+                }
+            },
+            AdjustPaginationAfterRecalculate() {
+                switch (this.Pagination.CurrentPage) {
+                    case 1: //first
+                        {
+                            var diff = this.Pagination.PageList[0] - 1;
+                            this.Pagination.PageList.forEach((value, index, arr) => {
+                                arr[index] = value - diff;
+                            })
+                        }
+                        break;
+                    case this.Pagination.TotalPage://last
+                        {
+                            var diff = this.Pagination.TotalPage - this.Pagination.PageList[this.Pagination.PageList.length - 1];
+                            this.Pagination.PageList.forEach((value, index, arr) => {
+                                arr[index] = value + diff;
+                            });
+                        }
+                        break;
+                    case this.Pagination.PageList[0]://previous
+                        {
+                            this.Pagination.PageList.forEach((value, index, arr) => {
+                                arr[index] = value - 1;
+                            })
+                        }
+                        break;
+                    case this.Pagination.PageList[this.Pagination.PageList.length - 1]://next
+                        {
+                            this.Pagination.PageList.forEach((value, index, arr) => {
+                                arr[index] = value + 1;
+                            })
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
             }
         }
     })

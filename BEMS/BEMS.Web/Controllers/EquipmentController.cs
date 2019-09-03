@@ -38,7 +38,7 @@ namespace BEMS.Web.Controllers
         {
             //var data = Request.Form;
             //var newPage = Convert.ToInt32(data["GotoPage"]);
-            var newPage = pageModel.NewPage;
+            var newPage = pageModel.NewPage - 1;
 
             var list = new List<dynamic>()
             {
@@ -48,7 +48,7 @@ namespace BEMS.Web.Controllers
 
             for (int i = 0; i < 500; i++)
             {
-                var item = new { ID = i, EType = "打印机" + i, Vendor = "斑马" + i, EModel = "B" + new Random().Next(), SeriaNumber = "S" + new Random(i).Next(), IP = "127.0.0." + i, MAC = "SSOSS" + i, LimitedUseage = i + "(年)", Owner = "张三", Address = "南京路120号", IsInUse = "是" };
+                var item = new { ID = i, EType = "打印机" + i, Vendor = "斑马" + i, EModel = "B" + new Random().Next(), SeriaNumber = "S" + new Random(i).Next(), IP = "127.0.0." + i, MAC = "SSOSS" + i, LimitedUseage = i + "(年)", Owner = "张三" + i.ToString(), Address = "南京路120号", IsInUse = "是" };
                 list.Add(item);
             }
             //list.Where("");
