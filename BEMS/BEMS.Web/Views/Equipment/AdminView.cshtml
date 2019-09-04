@@ -21,9 +21,9 @@
     <table class="table table-bordered table-hover">
         <thead>
             <tr>
-                <th>序号</th>
+                <th v-on:click="SortBy('ID')">序号</th>
                 <th>设备类型</th>
-                <th>设备厂家</th>
+                <th v-on:click="SortBy('Vendor')">设备厂家</th>
                 <th>设备型号</th>
                 <th>资产编号</th>
                 <th>设备IP</th>
@@ -53,7 +53,7 @@
     <div class="bottom">
         <ul class="pagination">
             <li :class="{'disabled':Pagination.CurrentPage==1}">
-                <a v-on:click="GotoFirst">First</a>
+                <a v-on:click="GotoPage(1)">First</a>
             </li>
             <li :class="{'disabled':Pagination.CurrentPage==1}">
                 <a v-on:click="GotoPrevious">&laquo;</a>
@@ -69,7 +69,7 @@
                 <a v-on:click="GotoNext">&raquo;</a>
             </li>
             <li :class="{'disabled':Pagination.CurrentPage==Pagination.TotalPage}">
-                <a v-on:click="GotoLast">Last</a>
+                <a v-on:click="GotoPage(Pagination.TotalPage)">Last</a>
             </li>
         </ul>
     </div>
@@ -106,9 +106,6 @@
                 alert(this.filter.EType);
                 alert(this.filter.Owner);
             },
-            GotoFirst() {
-                this.GotoPage(1);
-            },
             GotoPrevious() {
                 if (this.Pagination.CurrentPage != 1) {
                     this.GotoPage(this.Pagination.CurrentPage - 1);
@@ -118,9 +115,6 @@
                 if (this.Pagination.CurrentPage != this.Pagination.TotalPage) {
                     this.GotoPage(this.Pagination.CurrentPage + 1);
                 }
-            },
-            GotoLast() {
-                this.GotoPage(this.Pagination.TotalPage);
             },
             GotoPage(num) {
                 if (this.Pagination.CurrentPage != num) {
@@ -165,6 +159,11 @@
                     default:
                         break;
                 }
+            },
+            SortBy(field) {                
+                this.dataSource.sort(function (a, b) {
+                    return b[field] - a[field];
+                });
             }
         }
     })
