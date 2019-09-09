@@ -24,8 +24,6 @@ namespace BEMS.Web
                 app.UseDeveloperExceptionPage();
             }
 
-
-
             app.UseStaticFiles();
             app.UseMvcWithDefaultRoute();
 
