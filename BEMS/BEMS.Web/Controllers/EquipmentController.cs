@@ -9,11 +9,13 @@ using System.Linq.Dynamic;
 using System.Linq.Expressions;
 using System.IO;
 using Newtonsoft.Json;
+using BEMS.Web.Models;
 
 namespace BEMS.Web.Controllers
 {
     public class EquipmentController : Controller
     {
+        [Authorize]
         public IActionResult Index()
         {
             return View();
@@ -60,10 +62,5 @@ namespace BEMS.Web.Controllers
             return new JsonResult(list, setting);
         }
     }
-    public class PaginationModel
-    {
-        public int TotalPages { get; set; }
-        public int NewPage { get; set; }
-        public int PageSize { get { return 20; } }
-    }
+
 }
