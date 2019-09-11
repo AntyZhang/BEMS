@@ -2,18 +2,19 @@
     font-family: Arial Calibri 'Microsoft YaHei UI';
 }
 
-.Login_Box {
+.LoginBox {
+    width: 350px;
     background-color: white;
     z-index: 100;
     right: 30%;
     top: 30%;
     position: absolute;
-    -moz-box-shadow: 10px 10px 5px #888888; /* 老的 Firefox */
+    -moz-box-shadow: 10px 10px 5px #888888; 
     box-shadow: 10px 10px 5px #888888;
     padding: 15px 25px 30px 25px;
 }
 
-    .Login_Box h3 {
+    .LoginBox h3 {
         color: #1086FC;
         margin-bottom: 40px;
     }
