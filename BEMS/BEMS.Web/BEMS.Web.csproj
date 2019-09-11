@@ -13,10 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\image\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\BEMS.BAL\BEMS.BAL.csproj" />
   </ItemGroup>
 

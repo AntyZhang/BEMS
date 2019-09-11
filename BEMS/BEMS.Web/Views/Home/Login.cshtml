@@ -7,13 +7,13 @@
     <title>主页</title>
 
     <link href="~/lib/bootstrap-3.3.7-dist/css/bootstrap.css" rel="stylesheet" />
-
+    <script src="~/lib/vue-2.6.10.min.js"></script>
+    <script src="~/lib/axios-0.19.0.min.js"></script>
     <link href="~/css/Login.css" rel="stylesheet" />
 </head>
-<body style="height:100%">
-
+<body>
     <div>
-        <div style="min-height:350px;background-color:#1086FC">
+        <div style="min-height:350px;background-color:#1086FC;background-image:url(/image/main.jpg)">
         </div>
     </div>
     <div class="siteName">
@@ -23,23 +23,31 @@
         <h3>用户登录</h3>
         <div class="input-group" style="margin-bottom:20px">
             <span class="input-group-addon glyphicon glyphicon-user"></span>
-            <input type="text" class="form-control" id="user" style="display:inline;" placeholder="用户名" />
+            <input type="text" class="form-control" id="user" style="display:inline;" placeholder="用户名" v-model="UserName" />
         </div>
         <div class="input-group">
             <span class="input-group-addon glyphicon glyphicon-lock"></span>
-            <input type="text" class="form-control" id="password" style="display:inline;" placeholder="密码" />
+            <input type="password" class="form-control" id="password" style="display:inline;" placeholder="密码" v-model="Pwd" />
         </div>
         <div class="text-center" style="margin-top: 50px;">
-            <button type="submit" class="btn btn-primary" style="width:100%" onclick="login()">登录</button>
+            <button type="submit" class="btn btn-primary" style="width:100%" v-on:click="Login">登录</button>
         </div>
     </div>
 
-    @*<script>
-            var vm = new Vue({
-                el: "",
-                data: "",
-
-            });
-        </script>*@
+    <script>
+        var vm = new Vue({
+            el: ".LoginBox",
+            data: {
+                UserName: "",
+                Pwd: ""
+            },
+            methods: {
+                Login() {
+                    alert(this.UserName + "-" + this.Pwd);
+                    this.UserName = "return";
+                }
+            }
+        });
+    </script>
 </body>
 </html>
