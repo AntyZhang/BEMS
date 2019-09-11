@@ -15,7 +15,7 @@ namespace BEMS.Web.Controllers
 {
     public class EquipmentController : Controller
     {
-        [Authorize]
+        
         public IActionResult Index()
         {
             return View();
