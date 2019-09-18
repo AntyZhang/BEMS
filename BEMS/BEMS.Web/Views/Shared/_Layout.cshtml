@@ -3,20 +3,103 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
-    <link href="~/lib/bootstrap-3.3.7-dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
     <script src="~/lib/vue-2.6.10.min.js"></script>
     <script src="~/lib/axios-0.19.0.min.js"></script>
-
     <script src="~/lib/vue-axios.min.js"></script>
     <style>
         table th {
             background-color: #d9edf7;
         }
+
+        #navigationBar {
+            max-width: 180px;
+            min-width: 180px;
+            height: auto;
+            margin: 0 auto;
+            padding: 0 2px;
+        }
+
+            #navigationBar .menuGroup {
+                background-color: #eee;
+                padding-bottom: 1px;
+            }
+
+                #navigationBar .menuGroup .menuTilte {
+                    height: 40px;
+                    line-height: 40px;
+                    text-align: center !important;
+                    background-color: #33ABD6;
+                    font-weight: bold;
+                    color: white;
+                }
+
+                    #navigationBar .menuGroup .menuTilte:before {
+                        font-family: 'Glyphicons Halflings';
+                        content: "\e012";
+                        font-weight: 100;
+                        margin-right: 5px;
+                    }
+
+                #navigationBar .menuGroup li {
+                    list-style: none;
+                    text-align: center !important;
+                }
+
+        .titleActive {
+            background-color: #777777 !important;
+            opacity: 1;
+        }
+        /*#navigationBar .menuGroup li .active {
+                        border-left-color: #d9edf7;
+                    }*/
     </style>
 </head>
+
 <body>
     <div class="container-fluid">
-        @RenderBody()
+        <div class="row" style="padding:40px">
+
+        </div>
+        <div class="row form-inline">
+            <div id="navigationBar" class="col-lg-2 col-sm-2 col-xs-2">
+                <div v-for="menu in Menus" class="menuGroup">
+                    <div :class="['menuTilte',{titleActive:menu.Active}]" v-on:click="toggle(menu)" v-text="menu.Title"></div>
+                    <div v-show="menu.Active">
+                        <ul>
+                            <li v-for="childMenu in menu.MenuItems">{{childMenu}}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-10 col-sm-10 col-xs-10" style="padding:0 5px">
+                @RenderBody()
+            </div>
+        </div>
     </div>
+    <script>
+        var menuVm = new Vue({
+            el: "#navigationBar",
+            data: {
+                Menus: [{
+                    Active: false,
+                    Title: "父级菜单",
+                    MenuItems: ["子级菜单", "子级菜单", "子级菜单", "子级菜单"]
+                },
+                {
+                    Active: true,
+                    Title: "父级菜单",
+                    MenuItems: ["子级菜单", "子级菜单", "子级菜单", "子级菜单"]
+                }
+                ]
+            },
+            methods: {
+                //切换滑块
+                toggle: function (menu) {
+                    menu.Active = !menu.Active;
+                }
+            }
+        });
+    </script>
 </body>
 </html>
