@@ -4,6 +4,8 @@
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
     <link href="~/lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <link href="~/css/Menu.css" rel="stylesheet" />
     <script src="~/lib/vue-2.6.10.min.js"></script>
     <script src="~/lib/axios-0.19.0.min.js"></script>
     <script src="~/lib/vue-axios.min.js"></script>
@@ -12,54 +14,30 @@
             background-color: #d9edf7;
         }
 
-        #navigationBar {
-            max-width: 180px;
-            min-width: 180px;
-            height: auto;
-            margin: 0 auto;
-            padding: 0 2px;
+        .navbar-noborder {
+            background-color: white;
+            border-bottom-color: #e7e7e7;
         }
-
-            #navigationBar .menuGroup {
-                background-color: #eee;
-                padding-bottom: 1px;
-            }
-
-                #navigationBar .menuGroup .menuTilte {
-                    height: 40px;
-                    line-height: 40px;
-                    text-align: center !important;
-                    background-color: #33ABD6;
-                    font-weight: bold;
-                    color: white;
-                }
-
-                    #navigationBar .menuGroup .menuTilte:before {
-                        font-family: 'Glyphicons Halflings';
-                        content: "\e012";
-                        font-weight: 100;
-                        margin-right: 5px;
-                    }
-
-                #navigationBar .menuGroup li {
-                    list-style: none;
-                    text-align: center !important;
-                }
-
-        .titleActive {
-            background-color: #777777 !important;
-            opacity: 1;
-        }
-        /*#navigationBar .menuGroup li .active {
-                        border-left-color: #d9edf7;
-                    }*/
     </style>
 </head>
 
 <body>
     <div class="container-fluid">
-        <div class="row" style="padding:40px">
-
+        <div class="row" style="padding:0 15px;">
+            <nav class="navbar navbar-noborder fixed-top">
+                <div class="nav navbar-nav navbar-left">
+                    <a class="navbar-brand" href="~/Home/"><img src="~/image/logo.gif" style="width:50px;height:50px" /></a>
+                    <h1 class="navbar-text">xxxxxx管理系统</h1>
+                </div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a><span class="glyphicon glyphicon-user"></span>飒飒大师大啊实打实多</a>
+                    </li>
+                    <li>
+                        <a><span class="glyphicon glyphicon-log-out"></span>登出</a>
+                    </li>
+                </ul>
+            </nav>
         </div>
         <div class="row form-inline">
             <div id="navigationBar" class="col-lg-2 col-sm-2 col-xs-2">

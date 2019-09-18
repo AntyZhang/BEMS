@@ -1,0 +1,38 @@
+﻿#navigationBar {
+    max-width: 180px;
+    min-width: 180px;
+    height: auto;
+    margin: 0 auto;
+    padding: 0 2px;
+}
+
+    #navigationBar .menuGroup {
+        background-color: #eee;
+        padding-bottom: 1px;
+    }
+
+        #navigationBar .menuGroup .menuTilte {
+            height: 40px;
+            line-height: 40px;
+            text-align: center !important;
+            background-color: #33ABD6;
+            font-weight: bold;
+            color: white;
+        }
+
+            #navigationBar .menuGroup .menuTilte:before {
+                font-family: 'Glyphicons Halflings';
+                content: "\e012";
+                font-weight: 100;
+                margin-right: 5px;
+            }
+
+        #navigationBar .menuGroup li {
+            list-style: none;
+            text-align: center !important;
+        }
+
+.titleActive {
+    background-color: #777777 !important;
+    opacity: 1;
+}
