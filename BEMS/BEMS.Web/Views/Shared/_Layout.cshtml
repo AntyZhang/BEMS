@@ -39,42 +39,76 @@
                 </ul>
             </nav>
         </div>
-        <div class="row form-inline">
+        <div class="row form-inline" id="divMaster">
             <div id="navigationBar" class="col-lg-2 col-sm-2 col-xs-2">
                 <div v-for="menu in Menus" class="menuGroup">
-                    <div :class="['menuTilte',{titleActive:menu.Active}]" v-on:click="toggle(menu)" v-text="menu.Title"></div>
+                    <div :class="['menuTilte',{titleActive:menu.Active}]" v-on:click="toggleMenu(menu)" v-text="menu.Title"></div>
                     <div v-show="menu.Active">
                         <ul>
-                            <li v-for="childMenu in menu.MenuItems">{{childMenu}}</li>
+                            <li v-for="menuItem in menu.MenuItems" :class="[{itemActive:menuItem.Selected}]"><a v-on:click="selectItem(menuItem)" href="#">{{menuItem.Name}}</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
             <div class="col-lg-10 col-sm-10 col-xs-10" style="padding:0 5px">
-                @RenderBody()
+                <div id="divContent" v-html="InnerPage">
+                    @RenderBody()
+                </div>
             </div>
         </div>
     </div>
     <script>
         var menuVm = new Vue({
-            el: "#navigationBar",
+            el: "#divMaster",
             data: {
-                Menus: [{
-                    Active: false,
-                    Title: "父级菜单",
-                    MenuItems: ["子级菜单", "子级菜单", "子级菜单", "子级菜单"]
-                },
-                {
-                    Active: true,
-                    Title: "父级菜单",
-                    MenuItems: ["子级菜单", "子级菜单", "子级菜单", "子级菜单"]
-                }
-                ]
+                Menus: [],
+                InnerPage: ""
+            },
+            created() {
+                this.loadMenuData();
             },
             methods: {
-                //切换滑块
-                toggle: function (menu) {
-                    menu.Active = !menu.Active;
+                toggleMenu: function (menu) {
+                    if (menu.Active == true) {
+                        menu.Active = false;
+                    }
+                    else {
+                        this.Menus.forEach((value, index, arr) => {
+                            arr[index].Active = false;
+                        });
+                        menu.Active = true;
+                    }
+                },
+                selectItem: function (menuItem) {
+                    if (menuItem.Selected != true) {
+                        this.Menus.forEach((value, index, arr) => {
+                            arr[index].MenuItems.forEach((innerValue, innerIndex, innerArr) => {
+                                innerArr[innerIndex].Selected = false;
+                            });
+                        });
+                        menuItem.Selected = true;
+
+                        //axios.all(axios.get(menuItem.Link)).then(){
+                        //};
+
+
+                        var data = this.AyncGet(menuItem.Link);
+                        debugger;
+                        this.InnerPage = data;
+
+                    }
+                    else {
+                        return false;
+                    }
+                },
+                async AyncGet (url) {
+                    var result = await axios.get(url);
+                    return result.data;
+                },
+                loadMenuData: function () {
+                    axios.get("/Menu/GetAllMenus").then((response) => {
+                        this.Menus = response.data;
+                    })
                 }
             }
         });

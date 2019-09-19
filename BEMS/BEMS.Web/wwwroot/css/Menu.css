@@ -32,6 +32,20 @@
             text-align: center !important;
         }
 
+            #navigationBar .menuGroup li a {
+                color: black !important;
+                cursor: pointer;
+            }
+
+.itemActive {
+    /*background-color: #777777 !important;*/
+}
+
+    .itemActive:before {
+        font-family: 'Glyphicons Halflings';
+        content: "\e080";
+    }
+
 .titleActive {
     background-color: #777777 !important;
     opacity: 1;

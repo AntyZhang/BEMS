@@ -11,11 +11,11 @@ namespace BEMS.Web.Controllers
     {
         public IActionResult Index()
         {
-            ViewBag.SiteName = GlobalBusiness.GetSiteName();
-            return View("Login");
+            return View();
         }
         public IActionResult Login()
         {
+            ViewBag.SiteName = GlobalBusiness.GetSiteName();
             return View();
         }
     }
