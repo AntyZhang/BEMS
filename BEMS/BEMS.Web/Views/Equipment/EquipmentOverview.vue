@@ -1,0 +1,173 @@
+﻿
+<template>
+
+    <div id="adminView">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">设备管理</h3>
+            </div>
+            <div class="panel-body form-inline">
+                <label>设备类型: <input type="text" v-model="filter.EType" /></label>
+                <label>使用人: <input type="text" v-model="filter.Owner" /></label>
+
+                <input type="button" value="搜索" class="btn btn-primary" v-on:click="Search" />
+            </div>
+        </div>
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th v-on:click="SortBy('ID')">序号</th>
+                    <th>设备类型</th>
+                    <th v-on:click="SortBy('Vendor')">设备厂家</th>
+                    <th>设备型号</th>
+                    <th>资产编号</th>
+                    <th>设备IP</th>
+                    <th>设备MAC</th>
+                    <th>使用年限</th>
+                    <th>使用人</th>
+                    <th>使用部门/位置</th>
+                    <th>是否在用</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="item in dataSource" :key="item.ID">
+                    <td>{{item.ID}}</td>
+                    <td>{{item.EType}}</td>
+                    <td>{{item.Vendor}}</td>
+                    <td>{{item.EModel}}</td>
+                    <td>{{item.SeriaNumber}}</td>
+                    <td>{{item.IP}}</td>
+                    <td>{{item.MAC}}</td>
+                    <td>{{item.LimitedUseage}}</td>
+                    <td>{{item.Owner}}</td>
+                    <td>{{item.Address}}</td>
+                    <td>{{item.IsInUse}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="bottom">
+            <ul class="pagination">
+                <li :class="{'disabled':Pagination.CurrentPage==1}">
+                    <a v-on:click="GotoPage(1)">First</a>
+                </li>
+                <li :class="{'disabled':Pagination.CurrentPage==1}">
+                    <a v-on:click="GotoPrevious">&laquo;</a>
+                </li>
+                <li v-if="Pagination.PageList[0]>1" class="disabled"><a>...</a></li>
+                <li v-for="item in Pagination.PageList" :key="item" :class="{'active':item==Pagination.CurrentPage}">
+                    <a v-on:click="GotoPage(item)">
+                        <span aria-hidden="true" v-html="item"></span>
+                    </a>
+                </li>
+                <li v-if="Pagination.PageList[Pagination.PageList.length - 1]<Pagination.TotalPage" class="disabled"><a>...</a></li>
+                <li :class="{'disabled':Pagination.CurrentPage==Pagination.TotalPage}">
+                    <a v-on:click="GotoNext">&raquo;</a>
+                </li>
+                <li :class="{'disabled':Pagination.CurrentPage==Pagination.TotalPage}">
+                    <a v-on:click="GotoPage(Pagination.TotalPage)">Last</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</template>
+<style>
+    .pagination > li > a {
+        cursor: pointer;
+    }
+</style>
+<script>
+    export default {
+        //var vm = new Vue({
+        el: "#adminView",
+        data: function () {
+            return {
+                filter: {
+                    EType: "",
+                    Owner: ""
+                },
+                dataSource: [],
+                Pagination: {
+                    CurrentPage: 1,
+                    TotalPage: 0,
+                    PageList: [1, 2, 3]
+                }
+            }
+        },
+        created() {
+            this.LoadAllData();
+        },
+        methods: {
+            LoadAllData() {
+                axios.post("/Equipment/LoadData", { NewPage: this.Pagination.CurrentPage }).then((response) => {
+                    this.dataSource = response.data;
+                    this.Pagination.TotalPage = 25;
+                })
+            },
+            Search() {
+                alert(this.filter.EType);
+                alert(this.filter.Owner);
+            },
+            GotoPrevious() {
+                if (this.Pagination.CurrentPage != 1) {
+                    this.GotoPage(this.Pagination.CurrentPage - 1);
+                }
+            },
+            GotoNext() {
+                if (this.Pagination.CurrentPage != this.Pagination.TotalPage) {
+                    this.GotoPage(this.Pagination.CurrentPage + 1);
+                }
+            },
+            GotoPage(num) {
+                if (this.Pagination.CurrentPage != num) {
+                    this.Pagination.CurrentPage = num;
+                    this.AdjustPaginationAfterRecalculate();
+                    this.LoadAllData();
+                }
+            },
+            AdjustPaginationAfterRecalculate() {
+                switch (this.Pagination.CurrentPage) {
+                    case 1: //first
+                        {
+                            var diff = this.Pagination.PageList[0] - 1;
+                            this.Pagination.PageList.forEach((value, index, arr) => {
+                                arr[index] = value - diff;
+                            })
+                        }
+                        break;
+                    case this.Pagination.TotalPage://last
+                        {
+                            var diff = this.Pagination.TotalPage - this.Pagination.PageList[this.Pagination.PageList.length - 1];
+                            this.Pagination.PageList.forEach((value, index, arr) => {
+                                arr[index] = value + diff;
+                            });
+                        }
+                        break;
+                    case this.Pagination.PageList[0]://previous
+                        {
+                            this.Pagination.PageList.forEach((value, index, arr) => {
+                                arr[index] = value - 1;
+                            })
+                        }
+                        break;
+                    case this.Pagination.PageList[this.Pagination.PageList.length - 1]://next
+                        {
+                            this.Pagination.PageList.forEach((value, index, arr) => {
+                                arr[index] = value + 1;
+                            })
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
+            },
+            SortBy(field) {
+                this.dataSource.sort(function (a, b) {
+                    return b[field] - a[field];
+                });
+            }
+        }
+        //})
+    }
+</script>

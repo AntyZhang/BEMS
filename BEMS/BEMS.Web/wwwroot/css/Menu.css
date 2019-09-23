@@ -38,7 +38,7 @@
             }
 
 .itemActive {
-    /*background-color: #777777 !important;*/
+    background-color: white !important;
 }
 
     .itemActive:before {

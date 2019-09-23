@@ -1,3 +1,124 @@
-﻿@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <link href="~/css/Menu.css" rel="stylesheet" />
+    <script src="~/lib/vue-2.6.10.min.js"></script>
+    <script src="~/lib/axios-0.19.0.min.js"></script>
+    <script src="~/lib/vue-axios.min.js"></script>
+    <script src="~/lib/vue-router.min.js"></script>
+    <style>
+        table th {
+            background-color: #d9edf7;
+        }
+
+        .navbar-noborder {
+            background-color: white;
+            border-bottom-color: #e7e7e7;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid" id="divMain">
+        <div class="row" style="padding:0 15px;">
+            <nav class="navbar navbar-noborder fixed-top">
+                <div class="nav navbar-nav navbar-left">
+                    <a class="navbar-brand" href="~/Home/"><img src="~/image/logo.gif" style="width:50px;height:50px" /></a>
+                    <h1 class="navbar-text">xxxxxx管理系统</h1>
+                </div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a><span class="glyphicon glyphicon-user"></span>飒飒大师大啊实打实多</a>
+                    </li>
+                    <li>
+                        <a><span class="glyphicon glyphicon-log-out"></span>登出</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="row form-inline">
+            <div id="navigationBar" class="col-lg-2 col-sm-2 col-xs-2">
+                <div v-for="menu in Menus" class="menuGroup">
+                    <div :class="['menuTilte',{titleActive:menu.Active}]" v-on:click="toggleMenu(menu)" v-text="menu.Title"></div>
+                    <div v-show="menu.Active">                        
+                        <ul class="list-unstyled">
+                            <li v-for="menuItem in menu.MenuItems"><router-link :to="menuItem.Link" v-on:click="selectItem(menuItem)" >{{menuItem.Name}}</router-link></li>
+                        </ul>
+
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-10 col-sm-10 col-xs-10" style="padding:0 5px">
+                <div id="divMainBody">
+                    <router-view></router-view>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        import equipmentSummaryView from '~/Views/Equipment/EquipmentOverview.vue'
+
+        var login = {
+            template: "<h3>Login</h3>"
+        };
+        var account = {
+            template: "<h3>account</h3>"
+        };
+
+        var routerObject = new VueRouter({
+            routes: [
+                { path: '/login', component: login }
+            ]
+        });
+
+
+        var vm = new Vue({
+            el: "#divMain",
+            data: {
+                Menus: []
+            },
+            router: routerObject,
+            created() {
+                this.LoadMenuData();
+            },
+            methods: {
+                toggleMenu: function (menu) {
+                    if (menu.Active == true) {
+                        menu.Active = false;
+                    }
+                    else {
+                        this.Menus.forEach((value, index, arr) => {
+                            arr[index].Active = false;
+                        });
+                        menu.Active = true;
+                    }
+                },
+                selectItem: function (menuItem) {
+                    if (menuItem.Selected != true) {
+                        this.Menus.forEach((value, index, arr) => {
+                            arr[index].MenuItems.forEach((innerValue, innerIndex, innerArr) => {
+                                innerArr[innerIndex].Selected = false;
+                            });
+                        });
+                        menuItem.Selected = true;
+                    }
+                    else {
+                        return false;
+                    }
+                },
+                LoadMenuData: function () {
+                    axios.get("/Menu/GetAllMenus").then((response) => {
+                        this.Menus = response.data;
+                    })
+                }
+            }
+        });
+    </script>
+</body>
+</html>
