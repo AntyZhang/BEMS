@@ -18,6 +18,10 @@
             background-color: #33ABD6;
             font-weight: bold;
             color: white;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
 
             #navigationBar .menuGroup .menuTilte:before {
@@ -30,6 +34,10 @@
         #navigationBar .menuGroup li {
             list-style: none;
             text-align: center !important;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
 
             #navigationBar .menuGroup li a {

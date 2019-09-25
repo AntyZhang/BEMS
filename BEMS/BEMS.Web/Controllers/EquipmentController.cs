@@ -15,17 +15,8 @@ namespace BEMS.Web.Controllers
 {
     public class EquipmentController : Controller
     {
-        
-        public IActionResult Index()
-        {
-            return View();
-        }
 
-        public IActionResult AdminView()
-        {
-            return View();
-        }
-        public IActionResult GeneralView()
+        public IActionResult Index()
         {
             return View();
         }
@@ -38,10 +29,7 @@ namespace BEMS.Web.Controllers
         //[Authorize]
         public IActionResult LoadData([FromBody] PaginationModel pageModel)
         {
-            //var data = Request.Form;
-            //var newPage = Convert.ToInt32(data["GotoPage"]);
             var newPage = pageModel.NewPage - 1;
-
             var list = new List<dynamic>()
             {
                 new  { ID= 001, EType= "打印机", Vendor= "斑马", EModel= "B-123456", SeriaNumber= "98932823", IP= "127.0.0.1", MAC= "SSOSS", LimitedUseage= "5(年)", Owner= "张三", Address= "南京路120号", IsInUse= "是" },
@@ -53,13 +41,10 @@ namespace BEMS.Web.Controllers
                 var item = new { ID = i, EType = "打印机" + i, Vendor = "斑马" + i, EModel = "B" + new Random().Next(), SeriaNumber = "S" + new Random(i).Next(), IP = "127.0.0." + i, MAC = "SSOSS" + i, LimitedUseage = i + "(年)", Owner = "张三" + i.ToString(), Address = "南京路120号", IsInUse = "是" };
                 list.Add(item);
             }
-            //list.Where("");
+           
             list = list.Skip(newPage * 20).Take(20).ToList();
 
-            var setting = new Newtonsoft.Json.JsonSerializerSettings();
-            setting.ContractResolver = new DefaultContractResolver();
-
-            return new JsonResult(list, setting);
+            return new JsonResult(list);
         }
     }
 

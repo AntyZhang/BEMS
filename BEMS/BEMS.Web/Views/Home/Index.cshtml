@@ -44,13 +44,10 @@
             <div id="navigationBar" class="col-lg-2 col-sm-2 col-xs-2">
                 <div v-for="menu in Menus" class="menuGroup">
                     <div :class="['menuTilte',{titleActive:menu.Active}]" v-on:click="toggleMenu(menu)" v-text="menu.Title"></div>
-                    <div v-show="menu.Active">                        
+                    <div v-show="menu.Active">
                         <ul class="list-unstyled">
-                            <li v-for="menuItem in menu.MenuItems"><router-link :to="menuItem.Link" v-on:click="selectItem(menuItem)" >{{menuItem.Name}}</router-link></li>
+                            <li v-for="menuItem in menu.MenuItems"><router-link :to="menuItem.Link" v-on:click="selectItem(menuItem)">{{menuItem.Name}}</router-link></li>
                         </ul>
-
-
-
                     </div>
                 </div>
             </div>
@@ -61,23 +58,41 @@
             </div>
         </div>
     </div>
+    <div style="display:none">
+        @Html.Partial("../Equipment/Index.cshtml")
+        @Html.Partial("../Flow/Index.cshtml")
+    </div>
     <script>
-        import equipmentSummaryView from '~/Views/Equipment/EquipmentOverview.vue'
-
-        var login = {
-            template: "<h3>Login</h3>"
-        };
-        var account = {
-            template: "<h3>account</h3>"
-        };
-
         var routerObject = new VueRouter({
             routes: [
-                { path: '/login', component: login }
+                {
+                    path: '/Equipment',
+                    component: EQView
+                },
+                {
+                    path: '/Flow',
+                    component: MyWorkFlow,
+                    children: [{
+                        path: '/My',
+                        component: MyWorkFlow
+                    }, {
+                        path: '/NewEqRequest',
+                        component: MyWorkFlow
+                    }, {
+                        path: '/ScrapEqRequest',
+                        component: MyWorkFlow
+                    }, {
+                        path: '/EqTransferRequest',
+                        component: MyWorkFlow
+                    }
+                    ]
+                },
+                {
+                    path: '/Account',
+                    component: MyWorkFlow
+                }
             ]
         });
-
-
         var vm = new Vue({
             el: "#divMain",
             data: {

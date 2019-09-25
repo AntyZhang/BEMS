@@ -21,7 +21,7 @@ namespace BEMS.Web.Controllers
                 {
                     new MenuItem(){
                         Name ="我的单据",
-                        Link ="/flow/index",
+                        Link ="/flow",
                         Selected =true
                     }
                 }
@@ -59,7 +59,7 @@ namespace BEMS.Web.Controllers
                 {
                     new MenuItem(){
                         Name ="资产一览",
-                        Link ="/Equipment/AdminView",
+                        Link ="/equipment",
                         Selected =false
                     }
                 }

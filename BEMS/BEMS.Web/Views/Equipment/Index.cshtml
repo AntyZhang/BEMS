@@ -1,7 +1,11 @@
-﻿
-<template>
+﻿<style>
+    .pagination > li > a {
+        cursor: pointer;
+    }
+</style>
 
-    <div id="adminView">
+<template id="EQView">
+    <div>
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">设备管理</h3>
@@ -9,7 +13,6 @@
             <div class="panel-body form-inline">
                 <label>设备类型: <input type="text" v-model="filter.EType" /></label>
                 <label>使用人: <input type="text" v-model="filter.Owner" /></label>
-
                 <input type="button" value="搜索" class="btn btn-primary" v-on:click="Search" />
             </div>
         </div>
@@ -69,17 +72,10 @@
             </ul>
         </div>
     </div>
-
 </template>
-<style>
-    .pagination > li > a {
-        cursor: pointer;
-    }
-</style>
 <script>
-    export default {
-        //var vm = new Vue({
-        el: "#adminView",
+    var EQView = {
+        template: "#EQView",
         data: function () {
             return {
                 filter: {
@@ -168,6 +164,5 @@
                 });
             }
         }
-        //})
     }
 </script>
