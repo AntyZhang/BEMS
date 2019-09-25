@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace BEMS.Web.Models
+﻿namespace BEMS.Web.Models
 {
     public class FlowFilterModel
     {
