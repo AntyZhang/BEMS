@@ -34,18 +34,18 @@ namespace BEMS.Web.Controllers
                 MenuItems = new List<MenuItem>()
                 {
                     new MenuItem(){
-                        Name ="物品申领",
-                        Link ="",
+                        Name ="设备申领",
+                        Link ="/flow/NewEqRequest",
                         Selected =false
                     },
                     new MenuItem(){
                         Name ="报废申请",
-                        Link ="",
+                        Link ="/flow/ScrapEqRequest",
                         Selected =false
                     },
                     new MenuItem(){
                         Name ="资产转移",
-                        Link ="",
+                        Link ="/flow/EqTransRequest",
                         Selected =false
                     }
 

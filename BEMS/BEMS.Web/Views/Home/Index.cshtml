@@ -4,22 +4,15 @@
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
     <link href="~/lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
-
+    <link href="~/css/Main.css" rel="stylesheet" />
     <link href="~/css/Menu.css" rel="stylesheet" />
     <script src="~/lib/vue-2.6.10.min.js"></script>
     <script src="~/lib/axios-0.19.0.min.js"></script>
     <script src="~/lib/vue-axios.min.js"></script>
     <script src="~/lib/vue-router.min.js"></script>
-    <style>
-        table th {
-            background-color: #d9edf7;
-        }
-
-        .navbar-noborder {
-            background-color: white;
-            border-bottom-color: #e7e7e7;
-        }
-    </style>
+    <script>
+        Vue.config.devtools = true;
+    </script>
 </head>
 
 <body>
@@ -40,18 +33,18 @@
                 </ul>
             </nav>
         </div>
-        <div class="row form-inline">
-            <div id="navigationBar" class="col-lg-2 col-sm-2 col-xs-2">
+        <div class="row">
+            <div id="navigationBar" class="col-sm-2">
                 <div v-for="menu in Menus" class="menuGroup">
                     <div :class="['menuTilte',{titleActive:menu.Active}]" v-on:click="toggleMenu(menu)" v-text="menu.Title"></div>
                     <div v-show="menu.Active">
                         <ul class="list-unstyled">
-                            <li v-for="menuItem in menu.MenuItems"><router-link :to="menuItem.Link" v-on:click="selectItem(menuItem)">{{menuItem.Name}}</router-link></li>
+                            <li v-for="menuItem in menu.MenuItems"><router-link :to="menuItem.Link" active-class="itemActive" v-on:click="selectItem(menuItem)">{{menuItem.Name}}</router-link></li>
                         </ul>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-10 col-sm-10 col-xs-10" style="padding:0 5px">
+            <div class="col-sm-10" style="padding:0 5px;">
                 <div id="divMainBody">
                     <router-view></router-view>
                 </div>
@@ -61,36 +54,19 @@
     <div style="display:none">
         @Html.Partial("../Equipment/Index.cshtml")
         @Html.Partial("../Flow/Index.cshtml")
+        @Html.Partial("../Flow/NewEqRequest.cshtml")
+        @Html.Partial("../Flow/ScrapEqRequest.cshtml")
     </div>
     <script>
         var routerObject = new VueRouter({
             routes: [
-                {
-                    path: '/Equipment',
-                    component: EQView
-                },
-                {
-                    path: '/Flow',
-                    component: MyWorkFlow,
-                    children: [{
-                        path: '/My',
-                        component: MyWorkFlow
-                    }, {
-                        path: '/NewEqRequest',
-                        component: MyWorkFlow
-                    }, {
-                        path: '/ScrapEqRequest',
-                        component: MyWorkFlow
-                    }, {
-                        path: '/EqTransferRequest',
-                        component: MyWorkFlow
-                    }
-                    ]
-                },
-                {
-                    path: '/Account',
-                    component: MyWorkFlow
-                }
+                { path: '/Equipment', component: EQView },
+                { path: '/Flow', component: MyWorkFlow },
+                { path: '/Flow/My', component: MyWorkFlow },
+                { path: '/Flow/NewEqRequest', component: NewEqRequest },
+                { path: '/Flow/ScrapEqRequest', component: ScrapEqRequest },
+                //{ path: '/Flow/EqTransferRequest', component: MyWorkFlow },
+                { path: '/Account', component: MyWorkFlow }
             ]
         });
         var vm = new Vue({

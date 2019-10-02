@@ -38,6 +38,7 @@
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
+            margin: 5px;
         }
 
             #navigationBar .menuGroup li a {
@@ -46,7 +47,7 @@
             }
 
 .itemActive {
-    background-color: white !important;
+    font-weight:bold;
 }
 
     .itemActive:before {

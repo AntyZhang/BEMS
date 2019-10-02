@@ -1,0 +1,14 @@
+﻿
+.withBottomLine {
+    padding-bottom: 9px;
+    margin: 5px 0 5px;
+    border-bottom: 1px solid #eee;
+}
+table th {
+    background-color: #d9edf7;
+}
+
+.navbar-noborder {
+    background-color: white;
+    border-bottom-color: #e7e7e7;
+}
