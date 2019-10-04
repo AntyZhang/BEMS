@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BEMS.Model;
 using BEMS.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,6 +27,27 @@ namespace BEMS.Web.Controllers
         public IActionResult NewEqRequest()
         {
             return null;
+        }
+
+        public IActionResult CreateNewEqRequest([FromBody] dynamic data)
+        {
+            var model = new NewEqRequestModel()
+            {
+                Amount = data.Amount,
+                EquipmentNO = data.EquipmentNO,
+                EquipmentType = data.EquipmentType,
+                Memo = data.Memo,
+                Requester = data.Requester,
+                RequestTime = data.RequestTime
+            };
+
+
+
+            return new JsonResult(new
+            {
+                Flag = true,
+                Message = ""
+            }); ;
         }
 
         public IActionResult ScrapEqRequest()

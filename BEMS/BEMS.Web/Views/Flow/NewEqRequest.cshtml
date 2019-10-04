@@ -6,20 +6,20 @@
                 <div class="col-sm-6 col-xs-12">
                     <label for="txtRequester" class="col-sm-4 col-xs-12 control-label">申请人</label>
                     <div class="col-sm-8 col-xs-12">
-                        <input type="text" class="form-control" style="width:200px" id="txtRequester">
+                        <input type="text" class="form-control" style="width:200px" id="txtRequester" v-model="dataSource.Requester" />
                     </div>
                 </div>
                 <div class="col-sm-6 col-xs-12">
                     <label for="txtRequestDate" class="col-sm-4 col-xs-12 control-label">申请日期</label>
                     <div class="col-sm-8 col-xs-12">
-                        <input type="text" class="form-control" style="width:200px" id="txtRequestDate">
+                        <input type="text" class="form-control" style="width:200px" id="txtRequestDate" v-model="dataSource.RequestDate" />
                     </div>
                 </div>
             </div>
             <div class="form-group">
                 <label for="txtMemo" class="col-sm-2 control-label">备注</label>
                 <div class="col-sm-10">
-                    <textarea class="form-control" rows="5" id="txtMemo"></textarea>
+                    <textarea class="form-control" rows="5" id="txtMemo" v-model="dataSource.Memo"></textarea>
                 </div>
             </div>
             <div class="simpleLine"></div>
@@ -30,7 +30,7 @@
                 </div>
             </div>
             <div class="row text-center">
-                <button class="btn btn-primary" style="width:100px">提交</button>
+                <button class="btn btn-primary" style="width:100px" v-on:click="OnSubmit">提交</button>
             </div>
         </div>
     </div>
@@ -40,18 +40,30 @@
         template: "#NewEqRequest",
         data: function () {
             return {
-                dataSource: []
+                dataSource: {
+                    Requester: "ABX",
+                    RequestDate: "EDG",
+                    Memo: "QQQQQ"
+                }
             }
         },
         created() {
-            //this.LoadAllData();
+
         },
         methods: {
-            LoadAllData() {
-                axios.post("/Flow/LoadData", { IsInProgress: this.filter.IsInProgress, NewPage: this.Pagination.CurrentPage }).then((response) => {
-                    this.dataSource = response.data;
-                    this.Pagination.TotalPage = 25;
-                })
+            Initial() {
+
+            },
+            OnSubmit() {
+                axios.post("/Flow/CreateNewEqRequest", this.dataSource)
+                    .then((response) => {
+                        if (response.data.Flag == true) {
+                            this.Initial();
+                        }
+                        else {
+                            alert(response.data.Message)
+                        }
+                    })
             }
         }
     };
