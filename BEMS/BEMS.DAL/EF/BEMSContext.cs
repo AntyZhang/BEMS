@@ -19,12 +19,19 @@ namespace BEMS.DAL.EF
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Menu>().HasKey(t => t.ID);
+            modelBuilder.Entity<Menu>()
+                        .HasMany(t => t.Children)
+                        .WithOne(t => t.Parent)
+                        .HasForeignKey(t => t.ParentID);
         }
 
 
         public DbSet<BEMSUsers> BEMSUsers { get; set; }
 
         public DbSet<FlowNewEqRequest> FlowNewEqRequests { get; set; }
-
+        
+        public DbSet<Menu> Menus { get; set; }
     }
 }

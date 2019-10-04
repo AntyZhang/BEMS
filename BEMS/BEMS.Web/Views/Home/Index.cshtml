@@ -36,10 +36,10 @@
         <div class="row">
             <div id="navigationBar" class="col-sm-2">
                 <div v-for="menu in Menus" class="menuGroup">
-                    <div :class="['menuTilte',{titleActive:menu.Active}]" v-on:click="toggleMenu(menu)" v-text="menu.Title"></div>
-                    <div v-show="menu.Active">
+                    <div :class="['menuTilte',{titleActive:menu.Selected}]" v-on:click="toggleMenu(menu)" v-text="menu.Name"></div>
+                    <div v-show="menu.Selected">
                         <ul class="list-unstyled">
-                            <li v-for="menuItem in menu.MenuItems"><router-link :to="menuItem.Link" active-class="itemActive" v-on:click="selectItem(menuItem)">{{menuItem.Name}}</router-link></li>
+                            <li v-for="menuItem in menu.Children"><router-link :to="menuItem.Link" active-class="itemActive" v-on:click="selectItem(menuItem)">{{menuItem.Name}}</router-link></li>
                         </ul>
                     </div>
                 </div>
@@ -80,14 +80,14 @@
             },
             methods: {
                 toggleMenu: function (menu) {
-                    if (menu.Active == true) {
-                        menu.Active = false;
+                    if (menu.Selected == true) {
+                        menu.Selected = false;
                     }
                     else {
                         this.Menus.forEach((value, index, arr) => {
-                            arr[index].Active = false;
+                            arr[index].Selected = false;
                         });
-                        menu.Active = true;
+                        menu.Selected = true;
                     }
                 },
                 selectItem: function (menuItem) {
