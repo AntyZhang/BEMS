@@ -12,6 +12,7 @@ namespace BEMS.Model
         public int Amount { get; set; }
         public string Memo { get; set; }
         public int FlowIndex { get; set; }
-        public int Status { get; set; }
+        public bool IsComplete { get; set; }
+
     }
 }

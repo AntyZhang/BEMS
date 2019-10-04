@@ -11,7 +11,7 @@ namespace BEMS.DAL.EF.DBModels
 
         public string Memo { get; set; }
 
-        public int Status { get; set; }
+        //public int Status { get; set; }
         public bool IsComplete { get; set; }
         public DateTime RequestTime { get; set; }
         public string Requester { get; set; }

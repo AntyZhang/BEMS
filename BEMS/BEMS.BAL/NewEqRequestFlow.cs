@@ -11,19 +11,21 @@ namespace BEMS.BAL
 
         public NewEqRequestFlow()
         {
-            
+
         }
 
-        public void CreateNew(NewEqRequestModel model)
+        public static void CreateNew(NewEqRequestModel model)
         {
             try
             {
                 model.FlowIndex = 1;
+                model.IsComplete = false;
+
                 FlowDAL.CreateNewEqRequest(model);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 
