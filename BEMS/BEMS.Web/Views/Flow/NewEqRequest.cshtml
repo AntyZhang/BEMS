@@ -56,17 +56,31 @@
     </div>
 </template>
 <script>
+    padDate = (value) => {
+        return value < 10 ? '0' + value : value;
+    }
+    function GetDate() {
+        var date = new Date();
+        var year = date.getFullYear();
+        var month = padDate(date.getMonth() + 1);
+        var day = padDate(date.getDate());
+        var hours = padDate(date.getHours());
+        var minutes = padDate(date.getMinutes());
+        var seconds = padDate(date.getSeconds());
+        return year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
+    };
+
     var NewEqRequest = {
         template: "#NewEqRequest",
         data: function () {
             return {
                 dataSource: {
-                    Requester: "张三",
-                    RequestTime: "2019/01/01",
-                    Memo: "test",
+                    Requester: "",
+                    RequestTime: GetDate(),
+                    Memo: "",
                     Amount: 12,
-                    EquipmentType: "打印机",
-                    EquipmentNO: "斑马-23233"
+                    EquipmentType: "",
+                    EquipmentNO: ""
                 }
             }
         },
