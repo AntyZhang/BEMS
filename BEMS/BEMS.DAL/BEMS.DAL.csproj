@@ -11,4 +11,8 @@
     <PackageReference Include="MySql.Data.EntityFrameworkCore.Design" Version="8.0.17" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BEMS.Model\BEMS.Model.csproj" />
+  </ItemGroup>
+
 </Project>

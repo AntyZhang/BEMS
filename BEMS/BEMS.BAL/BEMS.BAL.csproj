@@ -10,6 +10,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BEMS.Common\BEMS.Common.csproj" />
+    <ProjectReference Include="..\BEMS.DAL\BEMS.DAL.csproj" />
+    <ProjectReference Include="..\BEMS.Model\BEMS.Model.csproj" />
   </ItemGroup>
 
 </Project>

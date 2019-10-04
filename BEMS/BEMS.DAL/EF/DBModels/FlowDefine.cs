@@ -7,8 +7,12 @@ namespace BEMS.DAL.EF.DBModels
     class FlowDefine
     {
         public int ID { get; set; }
-        public int FlowType { get; set; }
-
+        /// <summary>
+        /// NEWEQ
+        /// SCRAPEQ
+        /// </summary>
+        public string FlowType { get; set; }
+        //{index:"",owner:""}
         public string FlowStepDefine { get; set; }
 
         public DateTime CreatTime { get; set; }

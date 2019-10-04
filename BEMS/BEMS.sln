@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BEMS.DAL", "BEMS.DAL\BEMS.D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BEMS.Web", "BEMS.Web\BEMS.Web.csproj", "{EFC0D2DB-5A95-477C-81B6-59C820F52F95}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BEMS.Common", "BEMS.Common\BEMS.Common.csproj", "{F3507A81-5277-4431-806B-3F32FECD9100}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BEMS.Common", "BEMS.Common\BEMS.Common.csproj", "{F3507A81-5277-4431-806B-3F32FECD9100}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BEMS.Model", "BEMS.Model\BEMS.Model.csproj", "{6C60149F-D14D-4BA1-8B85-29B293BDF12A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{F3507A81-5277-4431-806B-3F32FECD9100}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3507A81-5277-4431-806B-3F32FECD9100}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F3507A81-5277-4431-806B-3F32FECD9100}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C60149F-D14D-4BA1-8B85-29B293BDF12A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C60149F-D14D-4BA1-8B85-29B293BDF12A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C60149F-D14D-4BA1-8B85-29B293BDF12A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C60149F-D14D-4BA1-8B85-29B293BDF12A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

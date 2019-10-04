@@ -1,17 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.ComponentModel.DataAnnotations;
 
 namespace BEMS.DAL.EF.DBModels
 {
     public class FlowBasic
     {
-        public int ID { get; set; }
-        public int CurrentApprover { get; set; }
+        [Key]
+        public string ID { get; set; }
+        public int FlowIndex { get; set; }
 
-        public DateTime CreateTime { get; set; }
-        public int Creator { get; set; }
+        public string Memo { get; set; }
+
+        public int Status { get; set; }
         public bool IsComplete { get; set; }
-        public string Comment { get; set; }
+        public DateTime RequestTime { get; set; }
+        public string Requester { get; set; }
+
     }
 }

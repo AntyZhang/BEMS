@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BEMS.DAL.EF.DBModels
 {
-    public class FlowEquipmentScrap : FlowBasic
+    public class FlowScrapEqRequest : FlowBasic
     {
         public int Applyer { get; set; }
 
