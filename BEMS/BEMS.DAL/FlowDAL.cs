@@ -22,7 +22,7 @@ namespace BEMS.DAL
                     FlowIndex = model.FlowIndex,
                     IsComplete = model.IsComplete
                 });
-                context.SaveChangesAsync();
+                context.SaveChanges();
             }
         }
 

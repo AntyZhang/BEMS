@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BEMS.DAL.EF.DBModels
 {
@@ -12,6 +13,7 @@ namespace BEMS.DAL.EF.DBModels
         public string Memo { get; set; }
 
         //public int Status { get; set; }
+        [Column(TypeName = "bit(1)")]
         public bool IsComplete { get; set; }
         public DateTime RequestTime { get; set; }
         public string Requester { get; set; }
