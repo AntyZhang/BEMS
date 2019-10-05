@@ -28,7 +28,7 @@ namespace BEMS.DAL.EF
         }
 
 
-        public DbSet<BEMSUsers> BEMSUsers { get; set; }
+        public DbSet<Users> Users { get; set; }
 
         public DbSet<FlowNewEqRequest> FlowNewEqRequests { get; set; }
         

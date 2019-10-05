@@ -7,3 +7,6 @@ insert into menus(parentID,name,link) values(3,'报废申请','/flow/ScrapEqRequ
 
 insert into menus(parentID,name,link) values(null,'资产查看',null);
 insert into menus(parentID,name,link) values(6,'资产一览','/equipment');
+
+insert into menus(parentID,name,link) values(null,'管理员',null);
+insert into menus(parentID,name,link) values(8,'用户管理','/admin/user');

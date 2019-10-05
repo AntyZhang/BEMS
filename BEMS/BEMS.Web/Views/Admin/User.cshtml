@@ -1,47 +1,17 @@
 ﻿<style>
-    .flowTab {
-        display: inline-block;
-        padding: 6px 12px;
-        margin-bottom: 0;
-        font-size: 14px;
-        font-weight: 400;
-        line-height: 1.42857143;
-        text-align: center;
-        white-space: nowrap;
-        vertical-align: middle;
-        -ms-touch-action: manipulation;
-        touch-action: manipulation;
-        cursor: pointer;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-        border: 1px solid #d9edf7;
-        min-width: 80px;
-        color: #333;
-        background-color: #fff;
-    }
-
-    .flowTabActive {
-        border-bottom: 0;
-        background-color: #33abd6;
-    }    
 </style>
-<template id="MyWorkFlowComponent">
+<template id="UserComponent">
     <div>
-        <div class="btn-group" role="group" aria-label="...">
-            <span :class="['flowTab',{flowTabActive:filter.IsInProgress}]" v-on:click="SwitchTab(true)">待审批</span>
-            <span :class="['flowTab',{flowTabActive:!filter.IsInProgress}]" v-on:click="SwitchTab(false)">已审批</span>
-        </div>
         <div style="border:1px solid #d9edf7">
             <table class="table table-hover table-bordered">
                 <thead>
                     <tr>
-                        <th>单号</th>
-                        <th>单据类型</th>
-                        <th>申请人</th>
-                        <th>申请日期</th>
-                        <th>状态</th>
+                        <th>账号</th>
+                        <th>用户名</th>
+                        <th>联系地址</th>
+                        <th>联系电话</th>
+                        <th>备注</th>
+                        <th>修改时间</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -81,13 +51,10 @@
     </div>
 </template>
 <script>
-    var MyWorkFlowComponent = {
-        template: "#MyWorkFlowComponent",
+    var UserComponent = {
+        template: "#UserComponent",
         data: function () {
             return {
-                filter: {
-                    IsInProgress: true
-                },
                 dataSource: [],
                 Pagination: {
                     CurrentPage: 1,
@@ -101,16 +68,10 @@
         },
         methods: {
             LoadAllData() {
-                axios.post("/Flow/LoadData", { IsInProgress: this.filter.IsInProgress, NewPage: this.Pagination.CurrentPage }).then((response) => {
+                axios.post("/Admin/User/LoadAllUser", { IsInProgress: this.filter.IsInProgress, NewPage: this.Pagination.CurrentPage }).then((response) => {
                     this.dataSource = response.data;
                     this.Pagination.TotalPage = 25;
                 })
-            },
-            SwitchTab(value) {
-                if (this.filter.IsInProgress != value) {
-                    this.filter.IsInProgress = value;
-                    this.LoadAllData();
-                }
             },
             GotoPrevious() {
                 if (this.Pagination.CurrentPage != 1) {
