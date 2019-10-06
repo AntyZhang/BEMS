@@ -1,60 +1,62 @@
 ﻿<style>
 </style>
 <template id="temp_UserProfile">
-    <h2 class="withBottomLine"><b>用户消息</b></h2>
-    <div class="form-horizontal">
-        <div class="form-group">
-            <div class="col-sm-6 col-xs-12">
-                <label for="txtAccount" class="col-sm-4 col-xs-12 control-label">账号</label>
-                <div class="col-sm-8 col-xs-12">
-                    <input type="text" class="form-control" style="width:200px" id="txtAccount" v-model="" />
+    <div>
+        <h2 class="withBottomLine"><b>用户信息</b></h2>
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div class="col-sm-6 col-xs-12">
+                    <label for="txtAccount" class="col-sm-4 col-xs-12 control-label">账号：</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control" style="width:200px" id="txtAccount" />
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xs-12">
+                    <label for="txtState" class="col-sm-4 col-xs-12 control-label">状态：</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="password" class="form-control" style="width:200px" id="txtState" />
+                    </div>
                 </div>
             </div>
-            <div class="col-sm-6 col-xs-12">
-                <label for="txtCreateDate" class="col-sm-4 col-xs-12 control-label">创建日期</label>
-                <div class="col-sm-8 col-xs-12">
-                    <input type="text" class="form-control" style="width:200px" id="txtCreateDate" v-model="" />
+            <div class="form-group">
+                <div class="col-sm-6 col-xs-12">
+                    <label for="txtEQType" class="col-sm-4 col-xs-12 control-label">用户名：</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control" style="width:200px" id="txtEQType" />
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xs-12">
+                    <label for="txtAddress" class="col-sm-4 col-xs-12 control-label">地址：</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control" style="width:200px" id="txtAddress" />
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-6 col-xs-12">
-                <label for="txtEQType" class="col-sm-4 col-xs-12 control-label">用户名</label>
-                <div class="col-sm-8 col-xs-12">
-                    <input type="text" class="form-control" style="width:200px" id="txtEQType" v-model="" />
+            <div class="form-group">
+                <div class="col-sm-6 col-xs-12">
+                    <label for="txtEQType" class="col-sm-4 col-xs-12 control-label">联系电话：</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control" style="width:200px" id="txtEQType" />
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xs-12">
+                    <label for="txtAddress" class="col-sm-4 col-xs-12 control-label">地址：</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control" style="width:200px" id="txtAddress" />
+                    </div>
                 </div>
             </div>
-            <div class="col-sm-6 col-xs-12">
-                <label for="txtAddress" class="col-sm-4 col-xs-12 control-label">地址</label>
-                <div class="col-sm-8 col-xs-12">
-                    <input type="text" class="form-control" style="width:200px" id="txtAddress" v-model="" />
+            <div class="form-group">
+                <label for="txtMemo" class="col-sm-2 control-label">备注：</label>
+                <div class="col-sm-10">
+                    <textarea class="form-control" rows="5" id="txtMemo"></textarea>
                 </div>
             </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-6 col-xs-12">
-                <label for="txtEQType" class="col-sm-4 col-xs-12 control-label">联系电话</label>
-                <div class="col-sm-8 col-xs-12">
-                    <input type="text" class="form-control" style="width:200px" id="txtEQType" v-model="" />
-                </div>
+            <div class="simpleLine"></div>
+            <div class="row text-center">
+                <button class="btn btn-primary" style="width:100px" v-on:click="OnSubmit">提交</button>
+                <button class="btn btn-primary" style="width:100px" v-on:click="OnResetPWD">重置密码</button>
             </div>
-            <div class="col-sm-6 col-xs-12">
-                <label for="txtAddress" class="col-sm-4 col-xs-12 control-label">地址</label>
-                <div class="col-sm-8 col-xs-12">
-                    <input type="text" class="form-control" style="width:200px" id="txtAddress" v-model="" />
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="txtMemo" class="col-sm-2 control-label">备注</label>
-            <div class="col-sm-10">
-                <textarea class="form-control" rows="5" id="txtMemo" v-model=""></textarea>
-            </div>
-        </div>
-        <div class="simpleLine"></div>
-        <div class="row text-center">
-            <button class="btn btn-primary" style="width:100px" v-on:click="OnSubmit">提交</button>
-            <button class="btn btn-primary" style="width:100px" v-on:click="OnResetPWD">重置密码</button>
         </div>
     </div>
 </template>
