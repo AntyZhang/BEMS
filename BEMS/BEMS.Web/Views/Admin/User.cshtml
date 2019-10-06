@@ -4,11 +4,11 @@
         margin-right: 17px;
     }
 </style>
-<template id="UserComponent">
+<template id="temp_User">
     <div>
-        <h2 class="withBottomLine"><b>用户管理</b></h2>
+        <h2 class="withBottomLine"><b>用户一览</b></h2>
         <div class="row">
-            <button class="btn btn-default btn-Right"><span class="glyphicon glyphicon-plus" style="color:green"></span>添加</button>
+            <button class="btn btn-default btn-Right"><span class="glyphicon glyphicon-plus" style="color:green"></span><router-link to="/user/userprofile">添加</router-link></button>
         </div>
         <div style="border:1px solid #d9edf7">
             <table class="table table-hover table-bordered">
@@ -64,8 +64,8 @@
     </div>
 </template>
 <script>
-    var UserComponent = {
-        template: "#UserComponent",
+    var Comp_User = {
+        template: "#temp_User",
         data: function () {
             return {
                 dataSource: [],

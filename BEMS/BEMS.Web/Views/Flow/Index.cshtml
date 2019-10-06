@@ -27,7 +27,7 @@
         background-color: #33abd6;
     }    
 </style>
-<template id="MyWorkFlowComponent">
+<template id="temp_MyWorkFlow">
     <div>
         <div class="btn-group" role="group" aria-label="...">
             <span :class="['flowTab',{flowTabActive:filter.IsInProgress}]" v-on:click="SwitchTab(true)">待审批</span>
@@ -81,8 +81,8 @@
     </div>
 </template>
 <script>
-    var MyWorkFlowComponent = {
-        template: "#MyWorkFlowComponent",
+    var Comp_MyWorkFlow = {
+        template: "#temp_MyWorkFlow",
         data: function () {
             return {
                 filter: {

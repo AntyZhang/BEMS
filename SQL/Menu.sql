@@ -10,3 +10,4 @@ insert into menus(parentID,name,link) values(6,'资产一览','/equipment');
 
 insert into menus(parentID,name,link) values(null,'管理员',null);
 insert into menus(parentID,name,link) values(8,'用户管理','/admin/user');
+insert into menus(parentID,name,link) values(8,'添加用户','/user/userprofile');

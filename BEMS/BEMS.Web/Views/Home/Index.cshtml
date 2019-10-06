@@ -57,19 +57,21 @@
         @Html.Partial("../Flow/NewEqRequest.cshtml")
         @Html.Partial("../Flow/ScrapEqRequest.cshtml")
         @Html.Partial("../Admin/User.cshtml")
+        @Html.Partial("../Admin/UserProfile.cshtml")
     </div>
     <script>
         var routerObject = new VueRouter({
             routes: [
-                { path: '/Equipment', component: EQViewComponent },
-                { path: '/Flow', component: MyWorkFlowComponent },
-                { path: '/Flow/My', component: MyWorkFlowComponent },
-                { path: '/Flow/NewEqRequest', component: NewEqRequestComponent },
-                { path: '/Flow/ScrapEqRequest', component: ScrapEqRequestComponent },
-                //{ path: '/Flow/EqTransferRequest', component: MyWorkFlow },
-                { path: '/Account', component: MyWorkFlowComponent },
-                { path: '/admin/user', component: UserComponent },
+                { path: '/Equipment', component: Comp_EQView },
+                { path: '/Flow', component: Comp_MyWorkFlow },
+                { path: '/Flow/My', component: Comp_MyWorkFlow },
+                { path: '/Flow/NewEqRequest', component: Comp_NewEqRequest },
+                { path: '/Flow/ScrapEqRequest', component: Comp_ScrapEqRequest },
+                { path: '/admin/user', component: Comp_User },
+                { path: '/user/userprofile', component: Comp_UserProfile }
             ]
+
+            //{ path: '/user/userprofile', component: Comp_UserProfile }
         });
         var vm = new Vue({
             el: "#divMain",
