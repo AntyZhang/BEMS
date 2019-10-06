@@ -1,7 +1,15 @@
 ﻿<style>
+    .btn-Right {
+        float: right;
+        margin-right: 17px;
+    }
 </style>
 <template id="UserComponent">
     <div>
+        <h2 class="withBottomLine"><b>用户管理</b></h2>
+        <div class="row">
+            <button class="btn btn-default btn-Right"><span class="glyphicon glyphicon-plus" style="color:green"></span>添加</button>
+        </div>
         <div style="border:1px solid #d9edf7">
             <table class="table table-hover table-bordered">
                 <thead>
@@ -12,15 +20,20 @@
                         <th>联系电话</th>
                         <th>备注</th>
                         <th>修改时间</th>
+                        <th>状态</th>
+                        <th>操作</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="item in dataSource" :key="item.ID">
-                        <td>{{item.ID}}</td>
-                        <td>{{item.FlowType}}</td>
-                        <td>{{item.Applicant}}</td>
-                        <td>{{item.RequestDate}}</td>
-                        <td>{{item.Status}}</td>
+                        <td>{{item.AccountName}}</td>
+                        <td>{{item.DisplayName}}</td>
+                        <td>{{item.Address}}</td>
+                        <td>{{item.Phone}}</td>
+                        <td>{{item.Memo}}</td>
+                        <td>{{item.LastModifyBy}}</td>
+                        <td>{{item.State}}</td>
+                        <td></td>
                     </tr>
                 </tbody>
             </table>
@@ -68,7 +81,7 @@
         },
         methods: {
             LoadAllData() {
-                axios.post("/Admin/User/LoadAllUser", { IsInProgress: this.filter.IsInProgress, NewPage: this.Pagination.CurrentPage }).then((response) => {
+                axios.post("/User/LoadAllUser", { NewPage: this.Pagination.CurrentPage }).then((response) => {
                     this.dataSource = response.data;
                     this.Pagination.TotalPage = 25;
                 })

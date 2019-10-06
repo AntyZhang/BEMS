@@ -86,9 +86,11 @@ namespace BEMS.DAL.Migrations
 
                     b.Property<string>("Phone");
 
+                    b.Property<bool>("State");
+
                     b.HasKey("ID");
 
-                    b.ToTable("BEMSUsers");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("BEMS.DAL.EF.DBModels.Menu", b =>

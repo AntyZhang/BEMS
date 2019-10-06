@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BEMS.DAL.Migrations
 {
     [DbContext(typeof(BEMSContext))]
-    [Migration("20191005152508_updateusertable")]
-    partial class updateusertable
+    [Migration("20191006092735_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -88,9 +88,11 @@ namespace BEMS.DAL.Migrations
 
                     b.Property<string>("Phone");
 
+                    b.Property<bool>("State");
+
                     b.HasKey("ID");
 
-                    b.ToTable("BEMSUsers");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("BEMS.DAL.EF.DBModels.Menu", b =>

@@ -26,6 +26,7 @@ namespace BEMS.DAL.EF.DBModels
         public string CreateBy { get; set; }
         public DateTime LastModifyTime { get; set; }
         public string LastModifyBy { get; set; }
-
+        [Column(TypeName = "bit(1)")]
+        public bool State { get; set; }
     }
 }
