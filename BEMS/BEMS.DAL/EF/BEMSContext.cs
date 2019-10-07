@@ -31,7 +31,9 @@ namespace BEMS.DAL.EF
         public DbSet<Users> Users { get; set; }
 
         public DbSet<FlowNewEqRequest> FlowNewEqRequests { get; set; }
-        
+
         public DbSet<Menu> Menus { get; set; }
+
+        public DbSet<FlowDefine> FlowDefines { get; set; }
     }
 }

@@ -11,8 +11,8 @@ namespace BEMS.Model
         public string EquipmentNO { get; set; }
         public int Amount { get; set; }
         public string Memo { get; set; }
-        public int FlowIndex { get; set; }
+        public int CurrentFlowIndex { get; set; }
         public bool IsComplete { get; set; }
-
+        public string Assignee { get; set; }
     }
 }

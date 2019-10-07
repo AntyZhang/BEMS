@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BEMS.DAL.Migrations
 {
     [DbContext(typeof(BEMSContext))]
-    [Migration("20191006092735_initial")]
+    [Migration("20191007103344_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -18,6 +18,24 @@ namespace BEMS.DAL.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
 
+            modelBuilder.Entity("BEMS.DAL.EF.DBModels.FlowDefine", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreatTime");
+
+                    b.Property<int>("Creator");
+
+                    b.Property<string>("FlowStepDefine");
+
+                    b.Property<string>("FlowType");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("FlowDefines");
+                });
+
             modelBuilder.Entity("BEMS.DAL.EF.DBModels.FlowNewEqRequest", b =>
                 {
                     b.Property<string>("ID")
@@ -25,11 +43,13 @@ namespace BEMS.DAL.Migrations
 
                     b.Property<int>("Amount");
 
+                    b.Property<string>("Assignee");
+
+                    b.Property<int>("CurrentFlowIndex");
+
                     b.Property<string>("EquipmentNO");
 
                     b.Property<string>("EquipmentType");
-
-                    b.Property<int>("FlowIndex");
 
                     b.Property<short>("IsComplete")
                         .HasColumnType("bit(1)");
@@ -68,11 +88,13 @@ namespace BEMS.DAL.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("AccountName");
+                    b.Property<string>("AccountName")
+                        .IsRequired();
 
                     b.Property<string>("Address");
 
-                    b.Property<string>("CreateBy");
+                    b.Property<string>("CreateBy")
+                        .IsRequired();
 
                     b.Property<DateTime>("CreateTime");
 
@@ -80,7 +102,7 @@ namespace BEMS.DAL.Migrations
 
                     b.Property<string>("LastModifyBy");
 
-                    b.Property<DateTime>("LastModifyTime");
+                    b.Property<DateTime?>("LastModifyTime");
 
                     b.Property<string>("Memo");
 
@@ -88,7 +110,8 @@ namespace BEMS.DAL.Migrations
 
                     b.Property<string>("Phone");
 
-                    b.Property<bool>("State");
+                    b.Property<short>("State")
+                        .HasColumnType("bit(1)");
 
                     b.HasKey("ID");
 

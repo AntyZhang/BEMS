@@ -16,6 +16,24 @@ namespace BEMS.DAL.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
 
+            modelBuilder.Entity("BEMS.DAL.EF.DBModels.FlowDefine", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreatTime");
+
+                    b.Property<int>("Creator");
+
+                    b.Property<string>("FlowStepDefine");
+
+                    b.Property<string>("FlowType");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("FlowDefines");
+                });
+
             modelBuilder.Entity("BEMS.DAL.EF.DBModels.FlowNewEqRequest", b =>
                 {
                     b.Property<string>("ID")
@@ -23,11 +41,13 @@ namespace BEMS.DAL.Migrations
 
                     b.Property<int>("Amount");
 
+                    b.Property<string>("Assignee");
+
+                    b.Property<int>("CurrentFlowIndex");
+
                     b.Property<string>("EquipmentNO");
 
                     b.Property<string>("EquipmentType");
-
-                    b.Property<int>("FlowIndex");
 
                     b.Property<short>("IsComplete")
                         .HasColumnType("bit(1)");

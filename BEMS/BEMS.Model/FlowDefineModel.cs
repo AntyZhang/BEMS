@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace BEMS.DAL.EF.DBModels
+namespace BEMS.Model
 {
-    public class FlowDefine
+    public class FlowDefineModel
     {
         public int ID { get; set; }
         /// <summary>
@@ -11,10 +13,16 @@ namespace BEMS.DAL.EF.DBModels
         /// </summary>
         public string FlowType { get; set; }
         //{index:"",owner:""}
-        public string FlowStepDefine { get; set; }
+        public List<FlowDefineStep> Steps { get; set; }
 
         public DateTime CreatTime { get; set; }
 
         public int Creator { get; set; }
+    }
+    public class FlowDefineStep
+    {
+        public int Index { get; set; }
+
+        public string Owner { get; set; }
     }
 }

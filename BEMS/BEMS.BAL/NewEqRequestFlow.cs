@@ -18,8 +18,20 @@ namespace BEMS.BAL
         {
             try
             {
-                model.FlowIndex = 1;
-                model.IsComplete = false;
+                var flowDefine = FlowBAL.GetFlowDefine("NEWEQ");
+                model.CurrentFlowIndex = 0;
+
+                var nextStep = FlowBAL.MoveToNextFlow(model.CurrentFlowIndex, flowDefine);
+                if (nextStep != null)
+                {
+                    model.CurrentFlowIndex = nextStep.Index;
+                    model.Assignee = nextStep.Owner;
+                    model.IsComplete = false;
+                }
+                else
+                {
+                    model.IsComplete = true;
+                }
 
                 FlowDAL.CreateNewEqRequest(model);
             }

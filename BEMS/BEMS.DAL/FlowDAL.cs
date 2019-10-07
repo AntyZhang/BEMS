@@ -1,6 +1,10 @@
 ﻿using BEMS.DAL.EF;
 using BEMS.Model;
+using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace BEMS.DAL
 {
@@ -19,16 +23,28 @@ namespace BEMS.DAL
                     Memo = model.Memo,
                     Requester = model.Requester,
                     RequestTime = model.RequestTime,
-                    FlowIndex = model.FlowIndex,
-                    IsComplete = model.IsComplete
+                    CurrentFlowIndex = model.CurrentFlowIndex,
+                    IsComplete = model.IsComplete,
+                    Assignee = model.Assignee
                 });
                 context.SaveChanges();
             }
         }
 
-        public void GetFlow()
+        public static FlowDefineModel GetFlowDefine(string flowType)
         {
-
+            using (var context = new BEMSContext())
+            {
+                var flowDefine = context.FlowDefines.SingleOrDefault(a => a.FlowType.Equals(flowType));
+                return new FlowDefineModel()
+                {
+                    Creator = flowDefine.Creator,
+                    CreatTime = flowDefine.CreatTime,
+                    FlowType = flowDefine.FlowType,
+                    ID = flowDefine.ID,
+                    Steps = JsonConvert.DeserializeObject<List<FlowDefineStep>>(flowDefine.FlowStepDefine)
+                };
+            }
         }
     }
 }

@@ -8,11 +8,28 @@ namespace BEMS.DAL.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "FlowDefines",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("MySQL:AutoIncrement", true),
+                    FlowType = table.Column<string>(nullable: true),
+                    FlowStepDefine = table.Column<string>(nullable: true),
+                    CreatTime = table.Column<DateTime>(nullable: false),
+                    Creator = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FlowDefines", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "FlowNewEqRequest",
                 columns: table => new
                 {
                     ID = table.Column<string>(nullable: false),
-                    FlowIndex = table.Column<int>(nullable: false),
+                    CurrentFlowIndex = table.Column<int>(nullable: false),
+                    Assignee = table.Column<string>(nullable: true),
                     Memo = table.Column<string>(nullable: true),
                     IsComplete = table.Column<short>(type: "bit(1)", nullable: false),
                     RequestTime = table.Column<DateTime>(nullable: false),
@@ -53,17 +70,17 @@ namespace BEMS.DAL.Migrations
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("MySQL:AutoIncrement", true),
-                    AccountName = table.Column<string>(nullable: true),
+                    AccountName = table.Column<string>(nullable: false),
                     Password = table.Column<string>(nullable: true),
                     DisplayName = table.Column<string>(nullable: true),
                     Address = table.Column<string>(nullable: true),
                     Phone = table.Column<string>(nullable: true),
                     Memo = table.Column<string>(nullable: true),
                     CreateTime = table.Column<DateTime>(nullable: false),
-                    CreateBy = table.Column<string>(nullable: true),
-                    LastModifyTime = table.Column<DateTime>(nullable: false),
+                    CreateBy = table.Column<string>(nullable: false),
+                    LastModifyTime = table.Column<DateTime>(nullable: true),
                     LastModifyBy = table.Column<string>(nullable: true),
-                    State = table.Column<short>(nullable: false)
+                    State = table.Column<short>(type: "bit(1)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -78,6 +95,9 @@ namespace BEMS.DAL.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "FlowDefines");
+
             migrationBuilder.DropTable(
                 name: "FlowNewEqRequest");
 
