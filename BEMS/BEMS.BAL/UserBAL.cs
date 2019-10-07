@@ -1,5 +1,6 @@
 ﻿using BEMS.DAL;
 using BEMS.DAL.EF.DBModels;
+using BEMS.Model;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -19,6 +20,30 @@ namespace BEMS.BAL
             {
                 throw ex;
             }
+        }
+
+        public static void SaveUserProfile(UserModel userData)
+        {
+            try
+            {
+                if (userData.ID.HasValue)
+                {
+                    UserDAL.UpdateUser(userData);
+                }
+                else
+                {
+                    userData.Password = GenerateDefaultPassword();
+                    UserDAL.CreateUser(userData);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        private static string GenerateDefaultPassword()
+        {
+            return "123456";
         }
     }
 }

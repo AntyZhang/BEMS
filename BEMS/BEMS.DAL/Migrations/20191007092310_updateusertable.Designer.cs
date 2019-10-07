@@ -3,14 +3,16 @@ using System;
 using BEMS.DAL.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BEMS.DAL.Migrations
 {
     [DbContext(typeof(BEMSContext))]
-    partial class BEMSContextModelSnapshot : ModelSnapshot
+    [Migration("20191007092310_updateusertable")]
+    partial class updateusertable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -66,13 +68,11 @@ namespace BEMS.DAL.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("AccountName")
-                        .IsRequired();
+                    b.Property<string>("AccountName");
 
                     b.Property<string>("Address");
 
-                    b.Property<string>("CreateBy")
-                        .IsRequired();
+                    b.Property<string>("CreateBy");
 
                     b.Property<DateTime>("CreateTime");
 
