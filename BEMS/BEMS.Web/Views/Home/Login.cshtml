@@ -4,12 +4,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>主页</title>
+    <title>请登录</title>
 
     <link href="~/lib/bootstrap-3.3.7-dist/css/bootstrap.css" rel="stylesheet" />
     <script src="~/lib/vue-2.6.10.min.js"></script>
     <script src="~/lib/axios-0.19.0.min.js"></script>
     <link href="~/css/Login.css" rel="stylesheet" />
+    <script src="~/lib/MD5.js"></script>
 </head>
 <body>
     <div>
@@ -29,6 +30,9 @@
             <span class="input-group-addon glyphicon glyphicon-lock"></span>
             <input type="password" class="form-control" id="password" style="display:inline;" placeholder="密码" v-model="Pwd" />
         </div>
+        <div class="text-left">
+            <span style="color:red">{{ErrorMessage}}</span>
+        </div>
         <div class="text-center" style="margin-top: 50px;">
             <button type="submit" class="btn btn-primary" style="width:100%" v-on:click="Login">登录</button>
         </div>
@@ -39,12 +43,20 @@
             el: ".LoginBox",
             data: {
                 UserName: "",
-                Pwd: ""
+                Pwd: "",
+                ErrorMessage: ""
             },
             methods: {
                 Login() {
-                    alert(this.UserName + "-" + this.Pwd);
-                    this.UserName = "return";
+                    this.ErrorMessage = "";
+                    axios.post("/Account/Login", { UserName: this.UserName, Pwd: md5(this.Pwd) }).then((response) => {
+                        if (response.data.Flag == true) {
+                            window.location = "/Home/index";
+                        }
+                        else {
+                            this.ErrorMessage = response.data.Message;
+                        }
+                    })
                 }
             }
         });

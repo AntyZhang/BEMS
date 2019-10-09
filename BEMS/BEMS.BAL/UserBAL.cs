@@ -43,7 +43,21 @@ namespace BEMS.BAL
         }
         private static string GenerateDefaultPassword()
         {
-            return "123456";
+            //123456
+            return "e10adc3949ba59abbe56e057f20f883e";
+        }
+
+
+        public static UserModel CheckLogin(string userName, string Pwd)
+        {
+            try
+            {
+                return UserDAL.CheckLogin(userName, Pwd);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

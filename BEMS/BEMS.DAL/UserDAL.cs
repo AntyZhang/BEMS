@@ -70,5 +70,35 @@ namespace BEMS.DAL
                 context.SaveChanges();
             }
         }
+
+
+        public static UserModel CheckLogin(string accountName, string Pwd)
+        {
+            using (var context = new BEMSContext())
+            {
+                var user = context.Users.SingleOrDefault(a => a.AccountName.Equals(accountName) && a.Password.Equals(Pwd));
+                if (user != null)
+                {
+                    return new UserModel()
+                    {
+                        AccountName = user.AccountName,
+                        Address = user.Address,
+                        CreateBy = user.CreateBy,
+                        CreateTime = user.CreateTime,
+                        DisplayName = user.DisplayName,
+                        ID = user.ID,
+                        LastModifyBy = user.LastModifyBy,
+                        LastModifyTime = user.LastModifyTime,
+                        Memo = user.Memo,
+                        Phone = user.Phone,
+                        State = user.State
+                    };
+                }
+                else
+                {
+                    throw new Exception("用户名或密码错误！");
+                }
+            }
+        }
     }
 }

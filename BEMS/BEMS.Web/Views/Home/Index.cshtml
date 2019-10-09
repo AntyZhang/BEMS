@@ -108,8 +108,7 @@
                     }
                 },
                 LoadMenuData: function () {
-                    axios.get("/Menu/GetAllMenus").then((response) => {
-                        debugger;
+                    axios.get("/Menu/GetAllMenus").then((response) => {                        
                         this.Menus = response.data;
                     })
                 }
