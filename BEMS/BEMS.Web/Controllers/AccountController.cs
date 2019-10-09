@@ -12,7 +12,12 @@ namespace BEMS.Web.Controllers
 {
     public class AccountController : Controller
     {
-        public IActionResult Login([FromBody] dynamic login)
+        public IActionResult Login()
+        {
+            ViewBag.SiteName = GlobalBusiness.GetSiteName();
+            return View();
+        }
+        public IActionResult CheckLogin([FromBody] dynamic login)
         {
             try
             {

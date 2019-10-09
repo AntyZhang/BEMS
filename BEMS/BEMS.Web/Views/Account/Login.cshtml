@@ -49,7 +49,7 @@
             methods: {
                 Login() {
                     this.ErrorMessage = "";
-                    axios.post("/Account/Login", { UserName: this.UserName, Pwd: md5(this.Pwd) }).then((response) => {
+                    axios.post("/Account/CheckLogin", { UserName: this.UserName, Pwd: md5(this.Pwd) }).then((response) => {
                         if (response.data.Flag == true) {
                             window.location = "/Home/index";
                         }
