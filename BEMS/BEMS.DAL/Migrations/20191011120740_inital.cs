@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BEMS.DAL.Migrations
 {
-    public partial class initial : Migration
+    public partial class inital : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -28,14 +28,14 @@ namespace BEMS.DAL.Migrations
                 columns: table => new
                 {
                     ID = table.Column<string>(nullable: false),
-                    CurrentFlowIndex = table.Column<int>(nullable: false),
+                    CurrentFlowIndex = table.Column<int>(nullable: true),
                     Assignee = table.Column<string>(nullable: true),
                     Memo = table.Column<string>(nullable: true),
                     IsComplete = table.Column<short>(type: "bit(1)", nullable: false),
                     RequestTime = table.Column<DateTime>(nullable: false),
                     Requester = table.Column<string>(nullable: true),
-                    EquipmentType = table.Column<string>(nullable: true),
-                    EquipmentNO = table.Column<string>(nullable: true),
+                    EType = table.Column<string>(nullable: true),
+                    EModel = table.Column<string>(nullable: true),
                     Amount = table.Column<int>(nullable: false)
                 },
                 constraints: table =>

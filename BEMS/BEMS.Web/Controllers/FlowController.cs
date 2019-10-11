@@ -31,8 +31,8 @@ namespace BEMS.Web.Controllers
             var model = new NewEqRequestModel()
             {
                 Amount = data.Amount,
-                EquipmentNO = data.EquipmentNO,
-                EquipmentType = data.EquipmentType,
+                EModel = data.EModel,
+                EType = data.EType,
                 Memo = data.Memo,
                 Requester = data.Requester,
                 RequestTime = data.RequestTime

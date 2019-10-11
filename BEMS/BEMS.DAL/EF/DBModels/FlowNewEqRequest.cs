@@ -5,8 +5,11 @@ namespace BEMS.DAL.EF.DBModels
     [Table("FlowNewEqRequest")]
     public class FlowNewEqRequest : FlowBasic
     {
-        public string EquipmentType { get; set; }
-        public string EquipmentNO { get; set; }
+        //类型
+        public string EType { get; set; }
+        //型号
+        public string EModel { get; set; }
         public int Amount { get; set; }
+
     }
 }

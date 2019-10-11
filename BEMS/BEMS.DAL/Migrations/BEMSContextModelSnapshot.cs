@@ -45,9 +45,9 @@ namespace BEMS.DAL.Migrations
 
                     b.Property<int?>("CurrentFlowIndex");
 
-                    b.Property<string>("EquipmentNO");
+                    b.Property<string>("EModel");
 
-                    b.Property<string>("EquipmentType");
+                    b.Property<string>("EType");
 
                     b.Property<short>("IsComplete")
                         .HasColumnType("bit(1)");

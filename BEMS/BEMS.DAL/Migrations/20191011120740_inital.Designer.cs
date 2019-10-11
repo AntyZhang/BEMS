@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BEMS.DAL.Migrations
 {
     [DbContext(typeof(BEMSContext))]
-    [Migration("20191011113836_updatecolumn")]
-    partial class updatecolumn
+    [Migration("20191011120740_inital")]
+    partial class inital
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -47,9 +47,9 @@ namespace BEMS.DAL.Migrations
 
                     b.Property<int?>("CurrentFlowIndex");
 
-                    b.Property<string>("EquipmentNO");
+                    b.Property<string>("EModel");
 
-                    b.Property<string>("EquipmentType");
+                    b.Property<string>("EType");
 
                     b.Property<short>("IsComplete")
                         .HasColumnType("bit(1)");

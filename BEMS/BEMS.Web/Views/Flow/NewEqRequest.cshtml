@@ -20,13 +20,13 @@
                 <div class="col-sm-6 col-xs-12">
                     <label for="txtEQType" class="col-sm-4 col-xs-12 control-label">设备类别</label>
                     <div class="col-sm-8 col-xs-12">
-                        <input type="text" class="form-control" style="width:200px" id="txtEQType" v-model="dataSource.EquipmentType" />
+                        <input type="text" class="form-control" style="width:200px" id="txtEQType" v-model="dataSource.EType" />
                     </div>
                 </div>
                 <div class="col-sm-6 col-xs-12">
-                    <label for="txtEQNO" class="col-sm-4 col-xs-12 control-label">设备型号</label>
+                    <label for="txtEModel" class="col-sm-4 col-xs-12 control-label">设备型号</label>
                     <div class="col-sm-8 col-xs-12">
-                        <input type="text" class="form-control" style="width:200px" id="txtEQNO" v-model="dataSource.EquipmentNO" />
+                        <input type="text" class="form-control" style="width:200px" id="txtEModel" v-model="dataSource.EModel" />
                     </div>
                 </div>
             </div>
@@ -80,8 +80,8 @@
                     RequestTime: GetDate(),
                     Memo: "",
                     Amount: 1,
-                    EquipmentType: "",
-                    EquipmentNO: ""
+                    EType: "",
+                    EModel: ""
                 }
             }
         },
