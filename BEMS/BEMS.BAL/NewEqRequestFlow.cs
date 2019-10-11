@@ -21,7 +21,7 @@ namespace BEMS.BAL
                 var flowDefine = FlowBAL.GetFlowDefine("NEWEQ");
                 model.CurrentFlowIndex = 0;
 
-                var nextStep = FlowBAL.MoveToNextFlow(model.CurrentFlowIndex, flowDefine);
+                var nextStep = FlowBAL.MoveToNextFlowStep(model.CurrentFlowIndex.Value, flowDefine);
                 if (nextStep != null)
                 {
                     model.CurrentFlowIndex = nextStep.Index;

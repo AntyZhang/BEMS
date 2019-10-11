@@ -1,5 +1,6 @@
 ﻿using BEMS.BAL;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 
 namespace BEMS.Web.Controllers
 {
@@ -8,7 +9,6 @@ namespace BEMS.Web.Controllers
         public IActionResult GetAllMenus()
         {
             var menuList = MenuBAL.GetMenus();
-
             return new JsonResult(menuList);
         }
     }

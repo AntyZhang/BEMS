@@ -3,14 +3,16 @@ using System;
 using BEMS.DAL.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BEMS.DAL.Migrations
 {
     [DbContext(typeof(BEMSContext))]
-    partial class BEMSContextModelSnapshot : ModelSnapshot
+    [Migration("20191011113836_updatecolumn")]
+    partial class updatecolumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

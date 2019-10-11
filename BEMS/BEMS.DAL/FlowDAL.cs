@@ -46,5 +46,37 @@ namespace BEMS.DAL
                 };
             }
         }
+
+        public static void ApproveNEWEQRequest(NewEqRequestModel model)
+        {
+
+        }
+
+        public static void ApproveScrapQRequest(NewEqRequestModel model)
+        {
+
+
+        }
+
+        public static NewEqRequestModel GetSingleNEWEQRequestByTickeyNo(string ticketNo)
+        {
+            using (var context = new BEMSContext())
+            {
+                var ticket = context.FlowNewEqRequests.SingleOrDefault(a => a.ID.Equals(ticketNo));
+                return new NewEqRequestModel()
+                {
+                    Amount = ticket.Amount,
+                    Assignee = ticket.Assignee,
+                    CurrentFlowIndex = ticket.CurrentFlowIndex,
+                    EquipmentNO = ticket.EquipmentNO,
+                    EquipmentType = ticket.EquipmentType,
+                    IsComplete = ticket.IsComplete,
+                    Memo = ticket.Memo,
+                    Requester = ticket.Requester,
+                    RequestTime = ticket.RequestTime
+                };
+
+            }
+        }
     }
 }

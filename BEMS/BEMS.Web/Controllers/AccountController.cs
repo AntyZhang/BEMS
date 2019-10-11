@@ -33,5 +33,20 @@ namespace BEMS.Web.Controllers
                 return new JsonResult(new { Flag = false, Message = ex.Message });
             }
         }
+
+        public IActionResult GetCurrentUser()
+        {
+            var currentUserStr = HttpContext.Session.GetString("CurrentUser");
+
+            if (!string.IsNullOrWhiteSpace(currentUserStr))
+            {
+                var currentUser = JsonConvert.DeserializeObject<UserModel>(currentUserStr);
+                return new JsonResult(new { DisplayName = currentUser.DisplayName });
+            }
+            else
+            {
+                return new RedirectResult("/Account/Login");
+            }
+        }
     }
 }

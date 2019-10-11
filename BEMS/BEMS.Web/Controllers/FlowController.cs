@@ -56,6 +56,31 @@ namespace BEMS.Web.Controllers
             }
         }
 
+        public IActionResult ApproveNewEQRequest([FromBody] dynamic data)
+        {
+            string ticketNo = data.TicketNo;
+            string flowType = data.FlowType;
+
+
+            try
+            {
+                return new JsonResult(new
+                {
+                    Flag = true,
+                    Message = string.Empty
+                });
+            }
+            catch (Exception e)
+            {
+
+                return new JsonResult(new
+                {
+                    Flag = false,
+                    Message = e.Message
+                });
+            }
+        }
+
         public IActionResult ScrapEqRequest()
         {
             return null;

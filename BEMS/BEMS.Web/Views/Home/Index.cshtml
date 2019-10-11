@@ -2,7 +2,8 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
+    <link rel="shortcut icon" href="~/image/favicon.ico" />
+    <title>主页</title>
     <link href="~/lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/css/Main.css" rel="stylesheet" />
     <link href="~/css/Menu.css" rel="stylesheet" />
@@ -25,7 +26,7 @@
                 </div>
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a><span class="glyphicon glyphicon-user"></span>飒飒大师大啊实打实多</a>
+                        <a><span class="glyphicon glyphicon-user"></span>{{UserDisplayName}}</a>
                     </li>
                     <li>
                         <a><span class="glyphicon glyphicon-log-out"></span>登出</a>
@@ -70,17 +71,17 @@
                 { path: '/admin/user', component: Comp_User },
                 { path: '/user/userprofile', component: Comp_UserProfile }
             ]
-
-            //{ path: '/user/userprofile', component: Comp_UserProfile }
         });
         var vm = new Vue({
             el: "#divMain",
             data: {
-                Menus: []
+                Menus: [],
+                UserDisplayName: ""
             },
             router: routerObject,
             created() {
                 this.LoadMenuData();
+                this.LoadUserData();
             },
             methods: {
                 toggleMenu: function (menu) {
@@ -108,8 +109,14 @@
                     }
                 },
                 LoadMenuData: function () {
-                    axios.get("/Menu/GetAllMenus").then((response) => {                        
+                    axios.get("/Menu/GetAllMenus").then((response) => {
                         this.Menus = response.data;
+                    })                    
+                },
+                LoadUserData: function () {
+                    axios.get("/Account/GetCurrentUser").then((response) => {
+                        debugger;
+                        this.UserDisplayName = response.data.DisplayName;
                     })
                 }
             }

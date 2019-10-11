@@ -8,7 +8,7 @@ namespace BEMS.DAL.EF.DBModels
     {
         [Key]
         public string ID { get; set; }
-        public int CurrentFlowIndex { get; set; }
+        public int? CurrentFlowIndex { get; set; }
         public string Assignee { get; set; }
         public string Memo { get; set; }
 
