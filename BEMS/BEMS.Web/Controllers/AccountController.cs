@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace BEMS.Web.Controllers
 {
-    public class AccountController : Controller
+    public class AccountController : BasicController
     {
         public IActionResult Login()
         {
@@ -24,9 +24,8 @@ namespace BEMS.Web.Controllers
                 String userName = login.UserName;
                 String pwd = login.Pwd;
                 UserModel user = UserBAL.CheckLogin(userName, pwd);
-                HttpContext.Session.SetString("CurrentUser", JsonConvert.SerializeObject(user));
+                CurrentUser = user;
                 return new JsonResult(new { Flag = true });
-                //return Redirect("/Home/Index");
             }
             catch (Exception ex)
             {
@@ -36,14 +35,11 @@ namespace BEMS.Web.Controllers
 
         public IActionResult GetCurrentUser()
         {
-            var currentUserStr = HttpContext.Session.GetString("CurrentUser");
-
-            if (!string.IsNullOrWhiteSpace(currentUserStr))
+            try
             {
-                var currentUser = JsonConvert.DeserializeObject<UserModel>(currentUserStr);
-                return new JsonResult(new { DisplayName = currentUser.DisplayName });
+                return new JsonResult(new { DisplayName = CurrentUser.DisplayName });
             }
-            else
+            catch (Exception)
             {
                 return new RedirectResult("/Account/Login");
             }

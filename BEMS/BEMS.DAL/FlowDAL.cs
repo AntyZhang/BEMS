@@ -78,5 +78,20 @@ namespace BEMS.DAL
 
             }
         }
+
+        public static List<TicketSummaryModel> GetTicketNeedMyApprove(string user, int page, int perpage)
+        {
+            using (var context = new BEMSContext())
+            {
+                return (context.FlowNewEqRequests.Where(a => a.Assignee.Equals(user)).Select(a => new TicketSummaryModel
+                {
+                    ID = a.ID,
+                    FlowType = a.EType,
+                    IsComplete = a.IsComplete,
+                    RequestDate = a.RequestTime,
+                    Requester = a.Requester
+                })).Skip(page * perpage).Take(perpage).ToList();
+            }
+        }
     }
 }

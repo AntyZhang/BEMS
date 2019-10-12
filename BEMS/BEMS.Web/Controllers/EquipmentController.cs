@@ -13,7 +13,7 @@ using BEMS.Web.Models;
 
 namespace BEMS.Web.Controllers
 {
-    public class EquipmentController : Controller
+    public class EquipmentController : BasicController
     {
 
         public IActionResult Index()
@@ -42,7 +42,7 @@ namespace BEMS.Web.Controllers
                 list.Add(item);
             }
            
-            list = list.Skip(newPage * 20).Take(20).ToList();
+            list = list.Skip(newPage * PerPage).Take(PerPage).ToList();
 
             return new JsonResult(list);
         }

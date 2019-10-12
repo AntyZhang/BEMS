@@ -89,5 +89,15 @@ namespace BEMS.BAL
         {
 
         }
+
+        public static List<TicketSummaryModel> GetTicketNeedMyApprove(string user, int page, int perpage)
+        {
+            return FlowDAL.GetTicketNeedMyApprove(user, page, perpage);
+        }
+
+        public static void GetTicketApprovedByMe()
+        {
+
+        }
     }
 }

@@ -80,16 +80,18 @@
                 //})
             },
             OnSubmit() {
-                debugger;
                 axios.post("/User/SaveUserProfile", { data: this.dataSource }).then((response) => {
                     if (response.data.Flag == true) {
+                        window.history.go(-1);
                     }
                     else {
                         alert(response.data.Message);
                     }
                 })
             },
-            OnResetPWD() { }
+            OnResetPWD() {
+
+            }
         }
     };
 </script>
