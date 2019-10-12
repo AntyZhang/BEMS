@@ -102,6 +102,15 @@
                 axios.post("/Flow/LoadMyTicket", { IsInProgress: this.filter.IsInProgress, NewPage: this.Pagination.CurrentPage }).then((response) => {
                     this.dataSource = response.data.Data;
                     this.Pagination.TotalPage = response.data.PageCount;
+                    if (this.Pagination.TotalPage >= 3) {
+                        this.Pagination.PageList = [1, 2, 3];
+                    }
+                    else {
+                        this.Pagination.PageList = [];
+                        for (var i = 0; i < this.Pagination.TotalPage; i++) {
+                            this.Pagination.PageList.push(i + 1);
+                        }
+                    }
                 })
             },
             SwitchTab(value) {

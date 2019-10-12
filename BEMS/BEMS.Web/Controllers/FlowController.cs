@@ -96,7 +96,7 @@ namespace BEMS.Web.Controllers
             var isInProgress = filterModel.IsInProgress;            
             var list = FlowBAL.GetTicketNeedMyApprove(base.CurrentUser.AccountName, newPage, PerPage);
 
-            return new JsonResult(new { Data = list, PageCount = Math.Ceiling(Convert.ToDecimal(list.Count / PerPage)) });
+            return new JsonResult(new { Data = list, PageCount = Math.Ceiling(Convert.ToDecimal(list.Count / (PerPage*1.0f))) });
         }
     }
 }
