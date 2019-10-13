@@ -14,19 +14,28 @@ namespace BEMS.DAL
         {
             using (var context = new BEMSContext())
             {
+                model.ID = "NEWEQ_" + DateTime.Now.ToString("yyyyMMddHHmmss");
                 context.FlowNewEqRequests.Add(new EF.DBModels.FlowNewEqRequest()
                 {
-                    ID = "NEWEQ_" + DateTime.Now.ToString("yyyyMMddHHmmss"),
+                    ID = model.ID,
                     Amount = model.Amount,
                     EModel = model.EModel,
                     EType = model.EType,
                     Memo = model.Memo,
                     Requester = model.Requester,
                     RequestTime = model.RequestTime,
-                    CurrentFlowIndex = model.CurrentFlowIndex,
-                    IsComplete = model.IsComplete,
-                    Assignee = model.Assignee
+                    IsComplete = model.IsComplete
                 });
+
+                context.FlowProgress.Add(new EF.DBModels.FlowProgress
+                {
+                    Assignee = model.Assignee,
+                    AssignTime = model.RequestTime,
+                    Comments = string.Empty,
+                    CurrentFlowStep = model.CurrentFlowIndex.Value,
+                    TicketID = model.ID
+                });
+
                 context.SaveChanges();
             }
         }
@@ -58,29 +67,33 @@ namespace BEMS.DAL
 
         }
 
-        public static NewEqRequestModel GetSingleNEWEQRequestByTickeyNo(string ticketNo)
+        public static NewEqRequestModel GetSingleNEWEQRequestByTickeyNo(string ticketID)
         {
             using (var context = new BEMSContext())
             {
-                var ticket = context.FlowNewEqRequests.SingleOrDefault(a => a.ID.Equals(ticketNo));
+
+                var ticket = (from t in context.FlowNewEqRequests
+                              join progress in context.FlowProgress on t.ID equals progress.TicketID
+                              where t.ID.Equals(ticketID)
+                              select new NewEqRequestModel()
+                              {
+                                  ID = t.ID,
+                                  Amount = t.Amount,
+                                  Assignee = progress.Assignee,
+                                  CurrentFlowIndex = progress.CurrentFlowStep,
+                                  EModel = t.EModel,
+                                  EType = t.EType,
+                                  IsComplete = t.IsComplete,
+                                  Memo = t.Memo,
+                                  Requester = t.Requester,
+                                  RequestTime = t.RequestTime
+                              }).FirstOrDefault();
+
                 if (ticket == null)
                 {
-                    throw new NullReferenceException(string.Format("单号：{0}未找到！", ticketNo));
+                    throw new NullReferenceException(string.Format("单号：{0}未找到！", ticketID));
                 }
-                return new NewEqRequestModel()
-                {
-                    ID = ticket.ID,
-                    Amount = ticket.Amount,
-                    Assignee = ticket.Assignee,
-                    CurrentFlowIndex = ticket.CurrentFlowIndex,
-                    EModel = ticket.EModel,
-                    EType = ticket.EType,
-                    IsComplete = ticket.IsComplete,
-                    Memo = ticket.Memo,
-                    Requester = ticket.Requester,
-                    RequestTime = ticket.RequestTime
-                };
-
+                return ticket;
             }
         }
 
@@ -88,14 +101,18 @@ namespace BEMS.DAL
         {
             using (var context = new BEMSContext())
             {
-                return (context.FlowNewEqRequests.Where(a => a.Assignee.Equals(user)).Select(a => new TicketSummaryModel
-                {
-                    ID = a.ID,
-                    FlowType = "NEWEQ",
-                    IsComplete = a.IsComplete,
-                    RequestDate = a.RequestTime,
-                    Requester = a.Requester
-                })).Skip(page * perpage).Take(perpage).ToList();
+                var list = (from ticket in context.FlowNewEqRequests
+                            join progress in context.FlowProgress on ticket.ID equals progress.TicketID
+                            where progress.Assignee.Equals(user)
+                            select new TicketSummaryModel
+                            {
+                                ID = ticket.ID,
+                                FlowType = "NEWEQ",
+                                IsComplete = ticket.IsComplete,
+                                RequestDate = ticket.RequestTime,
+                                Requester = ticket.Requester
+                            }).Skip(page * perpage).Take(perpage).ToList();
+                return list;
             }
         }
     }

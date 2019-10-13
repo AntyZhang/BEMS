@@ -35,5 +35,8 @@ namespace BEMS.DAL.EF
         public DbSet<Menu> Menus { get; set; }
 
         public DbSet<FlowDefine> FlowDefines { get; set; }
+
+        public DbSet<FlowProgress> FlowProgress { get; set; }
+        public DbSet<FlowProgressHistory> FlowProgressHistory { get; set; }
     }
 }
