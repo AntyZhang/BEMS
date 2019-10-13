@@ -29,7 +29,7 @@
                         <a><span class="glyphicon glyphicon-user"></span>{{UserDisplayName}}</a>
                     </li>
                     <li>
-                        <a><span class="glyphicon glyphicon-log-out"></span>登出</a>
+                        <a href="/Account/Logout"><span class="glyphicon glyphicon-log-out"></span>登出</a>
                     </li>
                 </ul>
             </nav>
@@ -76,12 +76,15 @@
             el: "#divMain",
             data: {
                 Menus: [],
-                UserDisplayName: ""
+                UserDisplayName: "",
+                AccountName:"",
             },
             router: routerObject,
             created() {
-                this.LoadMenuData();
+                console.log("parent create start...");
                 this.LoadUserData();
+                this.LoadMenuData();                
+                console.log("parent create end...");
             },
             methods: {
                 toggleMenu: function (menu) {
@@ -113,10 +116,10 @@
                         this.Menus = response.data;
                     })                    
                 },
-                LoadUserData: function () {
+                LoadUserData: function () {                    
                     axios.get("/Account/GetCurrentUser").then((response) => {
-                        debugger;
                         this.UserDisplayName = response.data.DisplayName;
+                        this.AccountName =response.data.AccountName;
                     })
                 }
             }

@@ -45,7 +45,7 @@
                 </thead>
                 <tbody>
                     <tr v-for="item in dataSource" :key="item.ID">
-                        <td>{{item.ID}}</td>
+                        <td><router-link :to="item.Link">{{item.ID}}</router-link></td>
                         <td>{{item.FlowType}}</td>
                         <td>{{item.Requester}}</td>
                         <td>{{item.RequestDate}}</td>

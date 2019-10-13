@@ -1,18 +1,18 @@
 ﻿<template id="temp_NewEqRequest">
     <div>
-        <h2 class="withBottomLine"><b>设备申领单</b></h2>
+        <h2 class="withBottomLine"><b>设备申领单</b><span v-if="dataSource.ID!=''">-{{dataSource.ID}}</span></h2>
         <div class="form-horizontal">
             <div class="form-group">
                 <div class="col-sm-6 col-xs-12">
                     <label for="txtRequester" class="col-sm-4 col-xs-12 control-label">申请人</label>
                     <div class="col-sm-8 col-xs-12">
-                        <input type="text" class="form-control" style="width:200px" id="txtRequester" v-model="dataSource.Requester" />
+                        <input type="text" class="form-control" style="width:200px" id="txtRequester" v-model="$parent.UserDisplayName" readonly />
                     </div>
                 </div>
                 <div class="col-sm-6 col-xs-12">
                     <label for="txtRequestDate" class="col-sm-4 col-xs-12 control-label">申请日期</label>
                     <div class="col-sm-8 col-xs-12">
-                        <input type="text" class="form-control" style="width:200px" id="txtRequestDate" v-model="dataSource.RequestTime" />
+                        <input type="text" class="form-control" style="width:200px" id="txtRequestDate" v-model="dataSource.RequestTime" readonly />
                     </div>
                 </div>
             </div>
@@ -33,7 +33,7 @@
             <div class="form-group">
                 <label for="txtAmount" class="col-sm-2 control-label">数量</label>
                 <div class="col-sm-10">
-                    <input type="number" class="form-control" style="width:200px" id="txtAmount" v-model="dataSource.Amount" />
+                    <input type="number" class="form-control" min="1" style="width:200px" id="txtAmount" v-model="dataSource.Amount" />
                 </div>
             </div>
             <div class="form-group">
@@ -42,15 +42,9 @@
                     <textarea class="form-control" rows="5" id="txtMemo" v-model="dataSource.Memo"></textarea>
                 </div>
             </div>
-            <div class="simpleLine"></div>
-            <div class="form-group">
-                <label for="txtApprover" class="col-sm-2 control-label">审批人</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" style="width:200px" id="txtApprover" readonly>
-                </div>
-            </div>
+            <div class="simpleLine"></div>            
             <div class="row text-center btn-group">
-                <button class="btn btn-primary" style="width:100px" v-on:click="OnSubmit">提交</button>
+                <button class="btn btn-primary" style="width:100px" :disabled="pageStatus.IsSaving" v-on:click="OnSubmit">提交</button>
                 <button class="btn btn-primary" style="width:100px" v-on:click="OnApprove">批准</button>
             </div>
         </div>
@@ -76,23 +70,65 @@
         data: function () {
             return {
                 dataSource: {
-                    Requester: "",
+                    ID: "",
+                    Requester: this.$parent.AccountName,
                     RequestTime: GetDate(),
                     Memo: "",
                     Amount: 1,
                     EType: "",
                     EModel: ""
-                }
+                },
+                pageStatus: {
+                    IsSaving: false
+                },
+                CurrentUser: ""
+
             }
         },
         created() {
-
+            console.log("child create start...");
+            if (this.$route.query.id != null & this.$route.query.id != '') {
+                this.dataSource.ID = this.$route.query.id;
+            }
+            this.Initial();
+            console.log("child create end...");
         },
         methods: {
             Initial() {
-                alert('success!');
+                if (this.dataSource.ID != "") {
+                    axios.post("/Flow/GetOneNEWEQTicket", { ID: this.dataSource.ID })
+                        .then((response) => {
+                            if (response.data.Flag == true) {
+                                var returnData = response.data.Data;
+                                this.dataSource = {
+                                    ID: returnData.ID,
+                                    Requester: returnData.Requester,
+                                    RequestTime: returnData.RequestTime,
+                                    Memo: returnData.Memo,
+                                    Amount: returnData.Amount,
+                                    EType: returnData.EType,
+                                    EModel: returnData.EModel
+                                };
+                            }
+                            else {
+                                alert(response.data.Message)
+                            }
+                        })
+                }
+                else {
+                    this.dataSource = {
+                        ID: "",
+                        Requester: this.$parent.AccountName,
+                        RequestTime: GetDate(),
+                        Memo: "",
+                        Amount: 1,
+                        EType: "",
+                        EModel: ""
+                    };
+                }
             },
             OnSubmit() {
+                this.pageStatus.IsSaving = true;
                 axios.post("/Flow/CreateNewEqRequest", this.dataSource)
                     .then((response) => {
                         if (response.data.Flag == true) {
@@ -101,10 +137,11 @@
                         else {
                             alert(response.data.Message)
                         }
+                        this.pageStatus.IsSaving = false;
                     })
             },
             OnApprove() {
-                axios.post("/Flow/ApproveNewEQRequest", { TicketNo: "" })
+                axios.post("/Flow/ApproveNewEQRequest", { TicketNo: this.dataSource.ID })
                     .then((response) => {
                         if (response.data.Flag == true) {
                             window.history.go(-1);

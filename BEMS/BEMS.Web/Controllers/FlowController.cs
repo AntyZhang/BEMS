@@ -93,10 +93,25 @@ namespace BEMS.Web.Controllers
         public IActionResult LoadMyTicket([FromBody] FlowFilterModel filterModel)
         {
             var newPage = filterModel.NewPage - 1;
-            var isInProgress = filterModel.IsInProgress;            
+            var isInProgress = filterModel.IsInProgress;
             var list = FlowBAL.GetTicketNeedMyApprove(base.CurrentUser.AccountName, newPage, PerPage);
 
-            return new JsonResult(new { Data = list, PageCount = Math.Ceiling(Convert.ToDecimal(list.Count / (PerPage*1.0f))) });
+            return new JsonResult(new { Data = list, PageCount = Math.Ceiling(Convert.ToDecimal(list.Count / (PerPage * 1.0f))) });
+        }
+
+        public IActionResult GetOneNEWEQTicket([FromBody] dynamic data)
+        {
+            try
+            {
+                string id = data.ID;
+                var ticket = FlowBAL.GetSingleNEWEQRequestByTickeyNo(id);
+                return new JsonResult(new { Flag = true, Data = ticket });
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { Flag = false, Message = ex.Message });
+            }
+
         }
     }
 }

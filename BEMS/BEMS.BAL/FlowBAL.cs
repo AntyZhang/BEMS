@@ -95,6 +95,19 @@ namespace BEMS.BAL
             return FlowDAL.GetTicketNeedMyApprove(user, page, perpage);
         }
 
+        public static NewEqRequestModel GetSingleNEWEQRequestByTickeyNo(string ticketNO)
+        {
+            try
+            {
+                return FlowDAL.GetSingleNEWEQRequestByTickeyNo(ticketNO);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
         public static void GetTicketApprovedByMe()
         {
 

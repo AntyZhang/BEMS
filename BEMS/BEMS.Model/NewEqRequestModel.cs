@@ -4,6 +4,7 @@ namespace BEMS.Model
 {
     public class NewEqRequestModel
     {
+        public string ID { get; set; }
 
         public string Requester { get; set; }
         public DateTime RequestTime { get; set; }

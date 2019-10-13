@@ -37,7 +37,14 @@ namespace BEMS.Web
             set
             {
                 _CurrentUser = value;
-                HttpContext.Session.SetString("CurrentUser", JsonConvert.SerializeObject(value));
+                if (value == null)
+                {
+                    HttpContext.Session.Clear();
+                }
+                else
+                {
+                    HttpContext.Session.SetString("CurrentUser", JsonConvert.SerializeObject(value));
+                }
             }
         }
 

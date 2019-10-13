@@ -15,5 +15,20 @@ namespace BEMS.Model
         public DateTime RequestDate { get; set; }
 
         public bool IsComplete { get; set; }
+        public string Link
+        {
+            get
+            {
+                switch (FlowType)
+                {
+                    case "NEWEQ":
+                        return "/Flow/NewEqRequest?id=" + ID;
+                    case "SCRAPEQ":
+                        return "/Flow/ScrapEqRequest?id=" + ID;
+                    default:
+                        return string.Empty;
+                }
+            }
+        }
     }
 }

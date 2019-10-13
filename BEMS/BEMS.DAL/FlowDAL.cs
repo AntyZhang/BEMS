@@ -63,8 +63,13 @@ namespace BEMS.DAL
             using (var context = new BEMSContext())
             {
                 var ticket = context.FlowNewEqRequests.SingleOrDefault(a => a.ID.Equals(ticketNo));
+                if (ticket == null)
+                {
+                    throw new NullReferenceException(string.Format("单号：{0}未找到！", ticketNo));
+                }
                 return new NewEqRequestModel()
                 {
+                    ID = ticket.ID,
                     Amount = ticket.Amount,
                     Assignee = ticket.Assignee,
                     CurrentFlowIndex = ticket.CurrentFlowIndex,
@@ -86,7 +91,7 @@ namespace BEMS.DAL
                 return (context.FlowNewEqRequests.Where(a => a.Assignee.Equals(user)).Select(a => new TicketSummaryModel
                 {
                     ID = a.ID,
-                    FlowType = a.EType,
+                    FlowType = "NEWEQ",
                     IsComplete = a.IsComplete,
                     RequestDate = a.RequestTime,
                     Requester = a.Requester

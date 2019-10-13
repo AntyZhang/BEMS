@@ -37,12 +37,18 @@ namespace BEMS.Web.Controllers
         {
             try
             {
-                return new JsonResult(new { DisplayName = CurrentUser.DisplayName });
+                return new JsonResult(new { DisplayName = CurrentUser.DisplayName, AccountName = CurrentUser.AccountName });
             }
             catch (Exception)
             {
                 return new RedirectResult("/Account/Login");
             }
+        }
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return View("Login");
         }
     }
 }

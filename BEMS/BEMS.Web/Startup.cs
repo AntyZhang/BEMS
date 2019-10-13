@@ -21,6 +21,7 @@ namespace BEMS.Web
                 {
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                     options.SerializerSettings.ContractResolver = new DefaultContractResolver();
+                    options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
                 });
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
