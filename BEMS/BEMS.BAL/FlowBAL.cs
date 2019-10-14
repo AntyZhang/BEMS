@@ -27,65 +27,54 @@ namespace BEMS.BAL
             }
         }
 
-        public static void ApproveFlow(string flowType, string ticketNo, string currentUser)
+        public static void ApproveNewEQRequest(string ticketID, string flowType, string currentUser, string strComments)
         {
             try
             {
                 var flowDefine = GetFlowDefine(flowType);
-                switch (flowType)
+                var ticket = FlowDAL.GetSingleNEWEQRequestByTickeyNo(ticketID);
+                var currentStep = flowDefine.Steps.SingleOrDefault(a => a.Index == ticket.CurrentFlowIndex);
+                var nextStep = MoveToNextFlowStep(currentStep.Index, flowDefine);
+
+                if (currentStep.Owner.Equals(ticket.Assignee))
                 {
-                    case "NEWEQ":
-                        ApproveNewEQRequest(ticketNo, currentUser, flowDefine);
-                        break;
-                    case "SCRAPEQ":
-                        ApproveScrapEQRequest(ticketNo, currentUser, flowDefine);
-                        break;
-                    default:
-                        break;
-                }
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-        }
-
-        private static void ApproveNewEQRequest(string ticketNo, string currentUser, FlowDefineModel flowDefine)
-        {
-            var ticket = FlowDAL.GetSingleNEWEQRequestByTickeyNo(ticketNo);
-            var currentStep = flowDefine.Steps.SingleOrDefault(a => a.Index == ticket.CurrentFlowIndex);
-            var nextStep = MoveToNextFlowStep(currentStep.Index, flowDefine);
-
-            if (currentStep.Owner.Equals(ticket.Assignee))
-            {
-                if (nextStep == null)
-                {
-                    var ticketComplete = new NewEqRequestModel()
+                    if (nextStep == null)
                     {
-                        Assignee = null,
-                        CurrentFlowIndex = null,
-                        IsComplete = true
-                    };
-                    FlowDAL.ApproveNEWEQRequest(ticketComplete);
+                        var ticketComplete = new NewEqRequestModel()
+                        {
+                            ID = ticketID,
+                            Assignee = null,
+                            CurrentFlowIndex = null,
+                            IsComplete = true,
+                            Comments = strComments
+                        };
+                        FlowDAL.ApproveNEWEQRequest(ticketComplete);
+                    }
+                    else
+                    {
+                        var ticketUpdate = new NewEqRequestModel()
+                        {
+                            ID = ticketID,
+                            Assignee = nextStep.Owner,
+                            CurrentFlowIndex = nextStep.Index,
+                            IsComplete = false,
+                            Comments = strComments
+                        };
+                        FlowDAL.ApproveNEWEQRequest(ticketUpdate);
+                    }
                 }
                 else
                 {
-                    var ticketUpdate = new NewEqRequestModel()
-                    {
-                        Assignee = nextStep.Owner,
-                        CurrentFlowIndex = nextStep.Index,
-                        IsComplete = false
-                    };
-                    FlowDAL.ApproveNEWEQRequest(ticketUpdate);
+                    throw new Exception("审批人信息不正确！");
                 }
             }
-            else
+            catch (Exception)
             {
-                throw new Exception("审批人信息不正确！");
+
+                throw;
             }
         }
-        private static void ApproveScrapEQRequest(string ticketNo, string currentUser, FlowDefineModel flowDefine)
+        private static void ApproveScrapEQRequest(string ticketNo, string currentUser, FlowDefineModel flowDefine, string strComments)
         {
 
         }

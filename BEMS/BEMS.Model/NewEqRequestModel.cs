@@ -15,5 +15,6 @@ namespace BEMS.Model
         public int? CurrentFlowIndex { get; set; }
         public bool IsComplete { get; set; }
         public string Assignee { get; set; }
+        public string Comments { get; set; }
     }
 }

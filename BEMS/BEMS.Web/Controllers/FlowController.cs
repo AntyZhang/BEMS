@@ -58,12 +58,13 @@ namespace BEMS.Web.Controllers
 
         public IActionResult ApproveNewEQRequest([FromBody] dynamic data)
         {
-            string ticketNo = data.TicketNo;
+            string ticketID = data.TicketNo;
             string flowType = data.FlowType;
-
+            string comments = data.Comments;
 
             try
             {
+                FlowBAL.ApproveNewEQRequest(ticketID, flowType, CurrentUser.AccountName, comments);
                 return new JsonResult(new
                 {
                     Flag = true,

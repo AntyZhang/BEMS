@@ -58,7 +58,23 @@ namespace BEMS.DAL
 
         public static void ApproveNEWEQRequest(NewEqRequestModel model)
         {
+            using (var context = new BEMSContext())
+            {
+                var ticket = context.FlowNewEqRequests.SingleOrDefault(a => a.ID.Equals(model.ID));
+                if (ticket == null)
+                {
+                    throw new NullReferenceException(string.Format("单据未找到。ID:{0}。", model.ID));
+                }
+                ticket.IsComplete = model.IsComplete;
 
+                var ticketFlow = context.FlowProgress.SingleOrDefault(a => a.TicketID.Equals(model.ID));
+
+                ticketFlow.Assignee = model.Assignee;
+                ticketFlow.AssignTime = DateTime.Now;
+                ticketFlow.CurrentFlowStep = model.CurrentFlowIndex.Value;
+                ticketFlow.Comments = model.Comments;
+                context.SaveChanges();
+            }
         }
 
         public static void ApproveScrapQRequest(NewEqRequestModel model)
