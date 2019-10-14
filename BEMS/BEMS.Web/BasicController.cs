@@ -12,17 +12,18 @@ namespace BEMS.Web
 {
     public class BasicController : Controller
     {
-        private UserModel _CurrentUser;
-        public UserModel CurrentUser
+        private UserModel _currentUser;
+
+        protected UserModel _CurrentUser
         {
             get
             {
-                if (_CurrentUser == null)
+                if (_currentUser == null)
                 {
                     if (!string.IsNullOrEmpty(HttpContext.Session.GetString("CurrentUser")))
                     {
-                        _CurrentUser = Newtonsoft.Json.JsonConvert.DeserializeObject<UserModel>(HttpContext.Session.GetString("CurrentUser"));
-                        return _CurrentUser;
+                        _currentUser = Newtonsoft.Json.JsonConvert.DeserializeObject<UserModel>(HttpContext.Session.GetString("CurrentUser"));
+                        return _currentUser;
                     }
                     else
                     {
@@ -31,12 +32,12 @@ namespace BEMS.Web
                 }
                 else
                 {
-                    return _CurrentUser;
+                    return _currentUser;
                 }
             }
             set
             {
-                _CurrentUser = value;
+                _currentUser = value;
                 if (value == null)
                 {
                     HttpContext.Session.Clear();
@@ -48,7 +49,7 @@ namespace BEMS.Web
             }
         }
 
-        public int PerPage
+        protected int _PerPage
         {
             get
             {

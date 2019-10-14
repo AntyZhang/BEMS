@@ -11,9 +11,10 @@ namespace BEMS.DAL.EF.DBModels
         public int ID { get; set; }
 
         public string TicketID { get; set; }
+        public string FlowType { get; set; }
         public int Step { get; set; }
         public string Comments { get; set; }
-        public string ApproveBy { get; set; }
-        public string ApproveTime { get; set; }
+        public string ActionBy { get; set; }
+        public string ActionTime { get; set; }
     }
 }

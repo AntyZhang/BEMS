@@ -35,7 +35,7 @@ namespace BEMS.Web.Controllers
                 EType = data.EType,
                 Memo = data.Memo,
                 Requester = data.Requester,
-                RequestTime = data.RequestTime
+                RequestTime = data.RequestTime                
             };
             try
             {
@@ -59,12 +59,11 @@ namespace BEMS.Web.Controllers
         public IActionResult ApproveNewEQRequest([FromBody] dynamic data)
         {
             string ticketID = data.TicketNo;
-            string flowType = data.FlowType;
             string comments = data.Comments;
 
             try
             {
-                FlowBAL.ApproveNewEQRequest(ticketID, flowType, CurrentUser.AccountName, comments);
+                FlowBAL.ApproveNewEQRequest(ticketID, _CurrentUser.AccountName, comments);
                 return new JsonResult(new
                 {
                     Flag = true,
@@ -91,13 +90,21 @@ namespace BEMS.Web.Controllers
         {
             return null;
         }
-        public IActionResult LoadMyTicket([FromBody] FlowFilterModel filterModel)
+        public IActionResult LoadMyTicket([FromBody] dynamic filterModel)
         {
-            var newPage = filterModel.NewPage - 1;
-            var isInProgress = filterModel.IsInProgress;
-            var list = FlowBAL.GetTicketNeedMyApprove(base.CurrentUser.AccountName, newPage, PerPage);
+            int newPage = filterModel.NewPage - 1;
+            bool isCreateByMe = filterModel.IsCreateByMe;
+            List<TicketSummaryModel> list;
+            if (isCreateByMe)
+            {
+                list = FlowBAL.GetTicketCreateByMe(base._CurrentUser.AccountName, newPage, _PerPage);
+            }
+            else
+            {
+                list = FlowBAL.GetTicketNeedMyApprove(base._CurrentUser.AccountName, newPage, _PerPage);
+            }
 
-            return new JsonResult(new { Data = list, PageCount = Math.Ceiling(Convert.ToDecimal(list.Count / (PerPage * 1.0f))) });
+            return new JsonResult(new { Data = list, PageCount = Math.Ceiling(Convert.ToDecimal(list.Count / (_PerPage * 1.0f))) });
         }
 
         public IActionResult GetOneNEWEQTicket([FromBody] dynamic data)

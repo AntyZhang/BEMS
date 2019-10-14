@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BEMS.DAL.Migrations
 {
     [DbContext(typeof(BEMSContext))]
-    [Migration("20191011120740_inital")]
-    partial class inital
+    [Migration("20191014120253_ininital")]
+    partial class ininital
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -43,10 +43,6 @@ namespace BEMS.DAL.Migrations
 
                     b.Property<int>("Amount");
 
-                    b.Property<string>("Assignee");
-
-                    b.Property<int?>("CurrentFlowIndex");
-
                     b.Property<string>("EModel");
 
                     b.Property<string>("EType");
@@ -63,6 +59,50 @@ namespace BEMS.DAL.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("FlowNewEqRequest");
+                });
+
+            modelBuilder.Entity("BEMS.DAL.EF.DBModels.FlowProgress", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("AssignTime");
+
+                    b.Property<string>("Assignee");
+
+                    b.Property<string>("Comments");
+
+                    b.Property<int>("CurrentFlowStep");
+
+                    b.Property<string>("LastUpdateBy");
+
+                    b.Property<DateTime>("LastUpdateTime");
+
+                    b.Property<string>("TicketID");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("FlowProgress");
+                });
+
+            modelBuilder.Entity("BEMS.DAL.EF.DBModels.FlowProgressHistory", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ActionBy");
+
+                    b.Property<string>("ActionTime");
+
+                    b.Property<string>("Comments");
+
+                    b.Property<int>("Step");
+
+                    b.Property<string>("TicketID");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("FlowProgressHistory");
                 });
 
             modelBuilder.Entity("BEMS.DAL.EF.DBModels.Menu", b =>

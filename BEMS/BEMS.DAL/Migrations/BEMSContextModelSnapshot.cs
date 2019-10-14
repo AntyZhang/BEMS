@@ -72,6 +72,12 @@ namespace BEMS.DAL.Migrations
 
                     b.Property<int>("CurrentFlowStep");
 
+                    b.Property<string>("FlowType");
+
+                    b.Property<string>("LastUpdateBy");
+
+                    b.Property<DateTime>("LastUpdateTime");
+
                     b.Property<string>("TicketID");
 
                     b.HasKey("ID");
@@ -84,11 +90,13 @@ namespace BEMS.DAL.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("ApproveBy");
+                    b.Property<string>("ActionBy");
 
-                    b.Property<string>("ApproveTime");
+                    b.Property<string>("ActionTime");
 
                     b.Property<string>("Comments");
+
+                    b.Property<string>("FlowType");
 
                     b.Property<int>("Step");
 

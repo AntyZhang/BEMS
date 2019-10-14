@@ -24,7 +24,7 @@ namespace BEMS.Web.Controllers
                 String userName = login.UserName;
                 String pwd = login.Pwd;
                 UserModel user = UserBAL.CheckLogin(userName, pwd);
-                CurrentUser = user;
+                _CurrentUser = user;
                 return new JsonResult(new { Flag = true });
             }
             catch (Exception ex)
@@ -37,7 +37,7 @@ namespace BEMS.Web.Controllers
         {
             try
             {
-                return new JsonResult(new { DisplayName = CurrentUser.DisplayName, AccountName = CurrentUser.AccountName });
+                return new JsonResult(new { DisplayName = _CurrentUser.DisplayName, AccountName = _CurrentUser.AccountName });
             }
             catch (Exception)
             {

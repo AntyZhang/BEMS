@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BEMS.DAL.Migrations
 {
     [DbContext(typeof(BEMSContext))]
-    [Migration("20191013101705_updateDB")]
-    partial class updateDB
+    [Migration("20191014123130_addcolumn")]
+    partial class addcolumn
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -74,6 +74,12 @@ namespace BEMS.DAL.Migrations
 
                     b.Property<int>("CurrentFlowStep");
 
+                    b.Property<string>("FlowType");
+
+                    b.Property<string>("LastUpdateBy");
+
+                    b.Property<DateTime>("LastUpdateTime");
+
                     b.Property<string>("TicketID");
 
                     b.HasKey("ID");
@@ -86,11 +92,13 @@ namespace BEMS.DAL.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("ApproveBy");
+                    b.Property<string>("ActionBy");
 
-                    b.Property<string>("ApproveTime");
+                    b.Property<string>("ActionTime");
 
                     b.Property<string>("Comments");
+
+                    b.Property<string>("FlowType");
 
                     b.Property<int>("Step");
 

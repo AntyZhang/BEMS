@@ -16,5 +16,9 @@ namespace BEMS.Model
         public bool IsComplete { get; set; }
         public string Assignee { get; set; }
         public string Comments { get; set; }
+        public string LastModifyBy { get; set; }
+
+        public DateTime? LastModifyTime { get; set; }
+
     }
 }

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BEMS.DAL.Migrations
 {
-    public partial class inital : Migration
+    public partial class ininital : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -28,8 +28,6 @@ namespace BEMS.DAL.Migrations
                 columns: table => new
                 {
                     ID = table.Column<string>(nullable: false),
-                    CurrentFlowIndex = table.Column<int>(nullable: true),
-                    Assignee = table.Column<string>(nullable: true),
                     Memo = table.Column<string>(nullable: true),
                     IsComplete = table.Column<short>(type: "bit(1)", nullable: false),
                     RequestTime = table.Column<DateTime>(nullable: false),
@@ -41,6 +39,42 @@ namespace BEMS.DAL.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_FlowNewEqRequest", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FlowProgress",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("MySQL:AutoIncrement", true),
+                    TicketID = table.Column<string>(nullable: true),
+                    CurrentFlowStep = table.Column<int>(nullable: false),
+                    Assignee = table.Column<string>(nullable: true),
+                    AssignTime = table.Column<DateTime>(nullable: false),
+                    Comments = table.Column<string>(nullable: true),
+                    LastUpdateBy = table.Column<string>(nullable: true),
+                    LastUpdateTime = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FlowProgress", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FlowProgressHistory",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("MySQL:AutoIncrement", true),
+                    TicketID = table.Column<string>(nullable: true),
+                    Step = table.Column<int>(nullable: false),
+                    Comments = table.Column<string>(nullable: true),
+                    ActionBy = table.Column<string>(nullable: true),
+                    ActionTime = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FlowProgressHistory", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -100,6 +134,12 @@ namespace BEMS.DAL.Migrations
 
             migrationBuilder.DropTable(
                 name: "FlowNewEqRequest");
+
+            migrationBuilder.DropTable(
+                name: "FlowProgress");
+
+            migrationBuilder.DropTable(
+                name: "FlowProgressHistory");
 
             migrationBuilder.DropTable(
                 name: "Menus");

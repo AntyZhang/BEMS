@@ -10,9 +10,13 @@ namespace BEMS.DAL.EF.DBModels
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
         public string TicketID { get; set; }
+        public string FlowType { get; set; }
         public int CurrentFlowStep { get; set; }
         public string Assignee { get; set; }
         public DateTime AssignTime { get; set; }
         public string Comments { get; set; }
+
+        public string LastUpdateBy { get; set; }
+        public DateTime LastUpdateTime { get; set; }
     }
 }

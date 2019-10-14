@@ -30,8 +30,8 @@
 <template id="temp_MyWorkFlow">
     <div>
         <div class="btn-group" role="group" aria-label="...">
-            <span :class="['flowTab',{flowTabActive:filter.IsInProgress}]" v-on:click="SwitchTab(true)">待审批</span>
-            <span :class="['flowTab',{flowTabActive:!filter.IsInProgress}]" v-on:click="SwitchTab(false)">已审批</span>
+            <span :class="['flowTab',{flowTabActive:filter.IsCreateByMe}]" v-on:click="SwitchTab(true)">我创建的</span>
+            <span :class="['flowTab',{flowTabActive:!filter.IsCreateByMe}]" v-on:click="SwitchTab(false)">我审批的</span>
         </div>
         <div style="border:1px solid #d9edf7">
             <table class="table table-hover table-bordered">
@@ -84,7 +84,7 @@
         data: function () {
             return {
                 filter: {
-                    IsInProgress: true
+                    IsCreateByMe: true
                 },
                 dataSource: [],
                 Pagination: {
@@ -99,7 +99,7 @@
         },
         methods: {
             LoadAllData() {
-                axios.post("/Flow/LoadMyTicket", { IsInProgress: this.filter.IsInProgress, NewPage: this.Pagination.CurrentPage }).then((response) => {
+                axios.post("/Flow/LoadMyTicket", { IsCreateByMe: this.filter.IsCreateByMe, NewPage: this.Pagination.CurrentPage }).then((response) => {
                     this.dataSource = response.data.Data;
                     this.Pagination.TotalPage = response.data.PageCount;
                     if (this.Pagination.TotalPage >= 3) {
@@ -114,8 +114,8 @@
                 })
             },
             SwitchTab(value) {
-                if (this.filter.IsInProgress != value) {
-                    this.filter.IsInProgress = value;
+                if (this.filter.IsCreateByMe != value) {
+                    this.filter.IsCreateByMe = value;
                     this.LoadAllData();
                 }
             },

@@ -42,7 +42,7 @@ namespace BEMS.Web.Controllers
                 list.Add(item);
             }
            
-            list = list.Skip(newPage * PerPage).Take(PerPage).ToList();
+            list = list.Skip(newPage * _PerPage).Take(_PerPage).ToList();
 
             return new JsonResult(list);
         }

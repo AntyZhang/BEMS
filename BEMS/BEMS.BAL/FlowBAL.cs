@@ -27,11 +27,11 @@ namespace BEMS.BAL
             }
         }
 
-        public static void ApproveNewEQRequest(string ticketID, string flowType, string currentUser, string strComments)
+        public static void ApproveNewEQRequest(string ticketID, string currentUser, string strComments)
         {
             try
             {
-                var flowDefine = GetFlowDefine(flowType);
+                var flowDefine = GetFlowDefine("NEWEQ");
                 var ticket = FlowDAL.GetSingleNEWEQRequestByTickeyNo(ticketID);
                 var currentStep = flowDefine.Steps.SingleOrDefault(a => a.Index == ticket.CurrentFlowIndex);
                 var nextStep = MoveToNextFlowStep(currentStep.Index, flowDefine);
@@ -46,7 +46,9 @@ namespace BEMS.BAL
                             Assignee = null,
                             CurrentFlowIndex = null,
                             IsComplete = true,
-                            Comments = strComments
+                            Comments = strComments,
+                            LastModifyBy = currentUser,
+                            LastModifyTime = DateTime.Now
                         };
                         FlowDAL.ApproveNEWEQRequest(ticketComplete);
                     }
@@ -58,7 +60,9 @@ namespace BEMS.BAL
                             Assignee = nextStep.Owner,
                             CurrentFlowIndex = nextStep.Index,
                             IsComplete = false,
-                            Comments = strComments
+                            Comments = strComments,
+                            LastModifyBy = currentUser,
+                            LastModifyTime = DateTime.Now
                         };
                         FlowDAL.ApproveNEWEQRequest(ticketUpdate);
                     }
@@ -82,6 +86,11 @@ namespace BEMS.BAL
         public static List<TicketSummaryModel> GetTicketNeedMyApprove(string user, int page, int perpage)
         {
             return FlowDAL.GetTicketNeedMyApprove(user, page, perpage);
+        }
+
+        public static List<TicketSummaryModel> GetTicketCreateByMe(string user, int page, int perpage)
+        {
+            return FlowDAL.GetTicketCreateByMe(user, page, perpage);
         }
 
         public static NewEqRequestModel GetSingleNEWEQRequestByTickeyNo(string ticketNO)
