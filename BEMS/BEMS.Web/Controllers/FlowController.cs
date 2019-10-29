@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BEMS.BAL;
 using BEMS.Model;
+using BEMS.Web.Attributes;
 using BEMS.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -35,7 +36,7 @@ namespace BEMS.Web.Controllers
                 EType = data.EType,
                 Memo = data.Memo,
                 Requester = data.Requester,
-                RequestTime = data.RequestTime                
+                RequestTime = data.RequestTime
             };
             try
             {
@@ -90,6 +91,7 @@ namespace BEMS.Web.Controllers
         {
             return null;
         }
+        [LoginNeeded]
         public IActionResult LoadMyTicket([FromBody] dynamic filterModel)
         {
             int newPage = filterModel.NewPage - 1;
